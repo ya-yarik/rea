@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/styles/styleforadmin.css">
+    <title>Сортировка и поиск пользователей</title>
+</head>
+<body style="background-image: url(/static/img/backgroundl.jpg)">
+<header>
+    <a href="/admin" class="underline-one">Администратор</a>
+</header>
+<h1>Поиск, сортировка, фильтрация</h1>
+<form method="post" th:action="@{/admin/users/sortuser}">
+    <p><label for="sortUser">Выберите параметр сортировки или фильтрации:</label></p>
+
+    <p><select id="sortUser" name="sort_filter">
+        <option value="email">Фильтрация пользователя по email адресу</option>
+        <option value="phone">Фильтрация пользователя по номеру телефона</option>
+        <option value="surname">Фильтрация пользователя по фамилии и сортировка по возрасту в порядке возрастания</option>
+        <option value="surnameDesc">Фильтрация пользователя по фамилии и сортировка по возрасту в порядке убывания</option>
+        <option value="surnameStart">Фильтрация пользователя по началу строки в фамилии</option>
+    </select></p>
+    <p><input type="text" name="sort"></p>
+    <hr class="hr-vertical-gradient">
+    <style>
+        .hr-vertical-gradient {
+            margin: 20px 0;
+            padding: 0;
+            height: 10px;
+            border: none;
+            background: linear-gradient(180deg, orange, blue);
+        }
+    </style>
+    <div class="keysblock">
+    <button type="submit" class="key">Выполнить</button>
+    </div>
+    <hr class="hr-vertical-gradient">
+<div id="userlist" th:each="element : ${usersT}">
+    <p><u>Фамилия:</u><nobr th:text="' ' + ${element.getSurname()}"></nobr></p>
+    <p><u>Имя:</u><nobr th:text="' ' + ${element.getName()}"></nobr></p>
+    <p><u>Отчество:</u><nobr th:text="' ' + ${element.getPatronymic()}"></nobr></p>
+    <p><u>Возраст:</u><nobr th:text="' ' + ${element.getAge()}"></nobr></p>
+    <p><u>Email:</u><nobr th:text="' ' + ${element.getEmail()}"></nobr></p>
+    <p><u>Номер телефона:</u><nobr th:text="' ' + ${element.getPhone()}"></nobr></p>
+</div>
+    <p></p>
+</form>
+</body>
+</html>

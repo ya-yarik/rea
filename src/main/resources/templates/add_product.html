@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/styles/styleforadmin.css">
+    <title>Добавление товара</title>
+</head>
+<body style="background-image: url(/static/img/backgroundl.jpg)">
+<header>
+    <a href="/product" class="underline-one">Товары</a>
+    <a href="/admin" class="underline-one">Администратор</a>
+</header>
+<h3>Добавление товара</h3>
+<form th:method="POST" th:action="@{/product/add}" th:object="${product}" enctype="multipart/form-data">
+    <label for="name">Введите наименование товара: </label>
+    <input type="text" th:field="*{name}" id="name">
+    <div class="incorrectFieldForm" style="color: red; background: white" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+    <br>
+    <label for="price">Введите цену товара (в рублях): </label>
+    <input type="text" th:field="*{price}" id="price" required>
+    <div class="incorrectFieldForm" style="color: red; background: white" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
+    <br>
+    <label for="weight">Введите вес товара (в граммах): </label>
+    <input type="text" th:field="*{weight}" id="weight" required>
+    <div class="incorrectFieldForm" style="color: red; background: white" th:if="${#fields.hasErrors('weight')}" th:errors="*{weight}"></div>
+    <br>
+    <label for="selectGoodProvider">Выберите поставщика: </label>
+    <select id="selectGoodProvider" th:field="*{provider}">
+        <option th:each="enum : ${T(com.example.project.enumm.Provider).values()}"
+        th:text="${enum.getDisplayValue()}"
+                th:value = "${enum}" >
+            <!--${T - получает знач. из файла -->
+        </option>
+    </select>
+    <p><input type="file" name="file" id="file"></p>
+    <hr class="hr-vertical-gradient">
+    <style>
+        .hr-vertical-gradient {
+            margin: 20px 0;
+            padding: 0;
+            height: 10px;
+            border: none;
+            background: linear-gradient(180deg, orange, blue);
+        }
+    </style>
+    <div class="keysblock">
+    <input type="submit" value="Добавить" class="key">
+    <a href="/product" class="link">Отмена</a>
+    </div>
+    <p></p>
+</form>
+</body>
+</html>

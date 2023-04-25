@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/styles/styleforadmin.css">
+    <title>Карточка пользователя</title>
+</head>
+<body style="background-image: url(/static/img/backgroundl.jpg)">
+<header>
+    <a href="/admin" class="underline-one">Администратор</a>
+    <a href="/admin/users" class="underline-one">Пользователи</a>
+</header>
+<h1>Карточка пользователя</h1>
+<div id="userlist">
+    <img th:src="'/img/'+${userForm.getFilePic()}">
+    <p><u>Фамилия:</u><nobr th:text="' '+${userForm.getSurname()}"></nobr></p>
+    <p><u>Имя:</u><nobr th:text="' '+${userForm.getName()}"></nobr></p>
+    <p></p><u>Отчество:</u><nobr th:text="' '+${userForm.getPatronymic()}"></nobr></p>
+    <p><u>Возраст:</u><nobr th:text="' '+${userForm.getAge()}"></nobr></p>
+    <p><u>Электронная почта:</u><nobr th:text="' '+${userForm.getEmail()}"></nobr></p>
+    <p><u>Телефон:</u><nobr th:text="' '+${userForm.getPhone()}"></nobr></p>
+
+<hr class="hr-vertical-gradient">
+<style>
+    .hr-vertical-gradient {
+        margin: 20px 0;
+        padding: 0;
+        height: 10px;
+        border: none;
+        background: linear-gradient(180deg, orange, blue);
+    }
+</style>
+    <div class="keysblock">
+<a th:href="@{/admin/users/edit/{id}(id=${userForm.getId()})}" class="link">Редактировать данные</a>
+<a th:href="@{/admin/users/delete/{id}(id=${userForm.getId()})}" class="link">Удалить данные</a>
+<a href="/admin" class="link">Отмена</a>
+    <p></p>
+    </div>
+</div>
+</body>
+</html>

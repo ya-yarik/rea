@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/styles/style.css">
+    <title>Добавление товара в корзину</title>
+</head>
+<body style="background-image: url(/static/img/backgroundl.jpg)">
+<h1>Добавление товара в корзину</h1>
+
+<form th:method="POST" th:action="@{/user/product/fullcart}" th:object="${cart}">
+    <label for="name">Введите наименование: </label>
+    <input type="text" th:field="*{name}" id="name">
+    <label for="price">Введите цену: </label>
+    <input type="number" th:field="*{price}" id="price" step="0.01" min="1">
+    <label for="quantity">Введите количество: </label>
+    <input type="number" th:field="*{quantity}" id="quantity" min="1">
+    <button type="submit">Добавить товар в корзину</button>
+</form>
+
+</body>
+</html>

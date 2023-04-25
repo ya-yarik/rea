@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/styles/styleforadmin.css">
+    <title>Список товаров</title>
+</head>
+<body style="background-image: url(/static/img/backgroundl.jpg)">
+<header>
+    <a href="/admin" class="underline-one">Администратор</a>
+    <a href="/product/add" class="underline-one">Добавить товар</a>
+    <a href="/product/sortgood" class="underline-one">Поиск товара</a>
+</header>
+<p></p>
+<form>
+<div th:each="product : ${product}" id="userlist"><!--each позволяет перебрать все продукты из листа ${product} - обращение к модели-->
+    <a th:href="@{/product/{id}(id=${product.getId()})}" th:text="${product.getId()}+'. '+${product.getName()}"></a>
+</div>
+    <p></p>
+    <hr class="hr-vertical-gradient">
+    <style>
+        .hr-vertical-gradient {
+            margin: 20px 0;
+            padding: 0;
+            height: 10px;
+            border: none;
+            background: linear-gradient(180deg, orange, blue);
+        }
+    </style>
+    <p></p>
+</form>
+</body>
+</html>
