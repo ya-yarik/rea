@@ -2,23 +2,15 @@ package com.example.project.controllers;
 
 
 
-import com.example.project.models.Cart;
-import com.example.project.models.Product;
+import com.example.project.repositories.CategoryRepository;
+import com.example.project.repositories.GoodsRepository;
+import com.example.project.services.CategoryServices;
 import com.example.project.services.GoodsServices;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.UUID;
 
 @Controller
 public class Products {
@@ -26,151 +18,166 @@ public class Products {
         @Value("${upload.path}")
         private String uploadPath;
 
-    @Autowired
-        public Products(GoodsServices goodOperations) {
+        private final GoodsRepository goodsRepository;
+        private final CategoryRepository categoryRepository;
+
+        private final CategoryServices categoryServices;
+
+        @Autowired
+        public Products(GoodsServices goodOperations, GoodsRepository goodsRepository, CategoryRepository categoryRepository, CategoryServices categoryServices) {
         this.goodOperations = goodOperations;
-    }
-
-    // Данный метод позволяет получить список всех продуктов и вернуть html страницу
-    @GetMapping("/product")
-    public String index(Model model){
-        model.addAttribute("product", goodOperations.getAllProducts());
-        return "product";
-    }
-
-    // Данный метод позволяет получить объект из листа по id
-    //PathVariable позволяет извлекать переменные
-    @GetMapping("/product/{id}")
-    public String infoProduct(@PathVariable("id") int id, Model model){
-        model.addAttribute("product", goodOperations.getProductId(id));
-        return "product_info";
-
-    }
-
-    // Данный метод позволяет отобразить представление с формой подабвления товара
-    @GetMapping("/product/add")
-    public String newProduct(Model model){
-        model.addAttribute("product", new Product());
-        return "add_product";
-    }
-
-    // Данный метод позволяет принять данные с формы и сохранить товар в лист
-    @PostMapping("/product/add")
-    public String newProduct(@ModelAttribute("product") @Valid Product product, BindingResult scanGoodsAddFields, @RequestParam("file") MultipartFile file) {
-        if (scanGoodsAddFields.hasErrors()){
-            return "add_product";
+        this.goodsRepository = goodsRepository;
+            this.categoryRepository = categoryRepository;
+            this.categoryServices = categoryServices;
         }
 
-        if(file == null){
-            goodOperations.newProduct(product);
-        }
-
-        else{
-            File uploadDir = new File(uploadPath);//создание директории, куда будет загружаться файл, при условии, что пользователь решил загрузить картинку
-            if(!uploadDir.exists()){
-                uploadDir.mkdir();//создание директории, если она не сущ.
-            }
-            String uuid = UUID.randomUUID().toString();//uuid - создаёт уникальное имя файла
-            String resultFileName = uuid+" "+ file.getOriginalFilename();
-            try {
-                file.transferTo(new File(uploadPath+resultFileName));//загрузка по описанному выше пути, наверху обработка исключения throw, если загрузка файла не произойдёт
-            } catch (IOException e) {
-                goodOperations.newProduct(product);
-            }
-            product.setFilePic(resultFileName);//установление имени файла имени товара
-        }
-
-        goodOperations.newProduct(product);
-        return "redirect:/product";
-
+    @GetMapping("/index/search")
+    public String productSearchSimple(Model model) {
+        model.addAttribute("productAll", goodOperations.getAllProducts());
+            return "index";
     }
 
-    // Данный метод позволяет получить редактируемый продукт по id и вернуть форму редактирования продукта
-    @GetMapping("/product/edit/{id}")
-    public String editProduct(@PathVariable("id") int id, Model model){
-        model.addAttribute("edit_product", goodOperations.getProductId(id));
-        return "edit_product";/*переадресация на url*/
+
+    @PostMapping("/index/search")
+    public String productSearchSimple(@RequestParam("sort") String sortSubmit, Model model) {
+            model.addAttribute("productS", goodOperations.getProductNameContainingIgnoreCase (sortSubmit));
+        return "search";
     }
 
-    // Данный метод позволяет принять редактируемый объект с формы и обновить информацион о редактируемом товаре
-    @PostMapping("/product/edit/{id}")
-    public String editProduct(@ModelAttribute("edit_product") @Valid Product product, BindingResult scanGoodsEditFields, @PathVariable("id") int id, @RequestParam("file") MultipartFile file) {
-       if(scanGoodsEditFields.hasErrors()){
-           return "edit_product";
-       }
-        if(file == null){goodOperations.editProduct(id,product);}
-        else {
-            File uploadDir = new File(uploadPath);
-            if(!uploadDir.exists()){
-                uploadDir.mkdir();
-            }
-            String uuid = UUID.randomUUID().toString();
-            String resultFileName = uuid+" "+ file.getOriginalFilename();
-            try {
-                file.transferTo(new File(uploadPath + resultFileName));
-            } catch (IOException e) {
-                goodOperations.editProduct(id,product);
-            }
-            product.setFilePic(resultFileName);
-        }
-        goodOperations.editProduct(id,product);
-        return "redirect:/product";
-    }
-
-    @GetMapping("/product/delete/{id}")
-    public String deleteProduct(@PathVariable("id") int id){
-        goodOperations.deleteProduct(id);
-        return "redirect:/product";
-    }
-
-    ////
-    @GetMapping("/product/sortgood")
-    public String sortingAndSearchingGoods(){
-        return "sortgood";
-    }
-
-    @PostMapping("/product/sortgood")
-    public String sortingAndSearchingGoods(@RequestParam("sortgood") String sorting, @RequestParam("sort") String sortSubmit, Model model){
-
-        if (sorting.equals("name")){
-            model.addAttribute("goodT", goodOperations.getProductNameStartingWith(sortSubmit));
-        }
-
-        else if(sorting.equals("priceAsc")) {
-            model.addAttribute("goodT", goodOperations.findByNameOrderByPriceAsc(sortSubmit));
-        }
-        else if(sorting.equals("priceDesc")) {
-            model.addAttribute("goodT", goodOperations.findByNameOrderByPriceDesc(sortSubmit));
-        }
-//        else if(sorting.equals("provider")){
-//            model.addAttribute("goodT", goodOperations.findByProvider(provider));
+//    @GetMapping("/product/{id}")
+//    public String infoProduct(@PathVariable("id") int id, Model model) {
+//        model.addAttribute("product", goodOperations.getProductId(id));
+//        return "product_info";
+//    }
+//    @GetMapping("/product/search")
+//   public String productSearch (Model model) {
+//    model.addAttribute("category", categoryRepository.findAll());
+//    return "index";
+//}
+//
+//    @PostMapping("/product/search")
+//    public String productSearch(@RequestParam("search") String search, @RequestParam("up") String up, @RequestParam("to") String to, @RequestParam(value = "price", required = false, defaultValue = "") String price, @RequestParam(value = "contract", required = false, defaultValue = "")String contract, Model model){
+//        model.addAttribute("product", goodOperations.getAllProducts());
+//
+//        if(!up.isEmpty() & !to.isEmpty()){
+//            if(!price.isEmpty()){
+//                if(price.equals("sorted_by_ascending_price")) {
+//                    if (!contract.isEmpty()) {
+//                        if (contract.equals("furniture")) {
+//                            model.addAttribute("search_product", goodsRepository.findByNameAndCategoryOrderByPriceAsc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to), 1));
+//                        } else if (contract.equals("appliances")) {
+//                            model.addAttribute("search_product", goodsRepository.findByNameAndCategoryOrderByPriceAsc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to), 3));
+//                        } else if (contract.equals("clothes")) {
+//                            model.addAttribute("search_product", goodsRepository.findByNameAndCategoryOrderByPriceAsc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to), 2));
+//                        }
+//                    } else {
+//                        model.addAttribute("search_product", goodsRepository.findByNameOrderByPriceAsc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to)));
+//                    }
+//                } else if(price.equals("sorted_by_descending_price")){
+//                    if(!contract.isEmpty()){
+//                        if(contract.equals("furniture")){
+//                            model.addAttribute("search_product", goodsRepository.findByNameAndCategoryOrderByPriceDesc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to), 1));
+//                        }else if (contract.equals("appliances")) {
+//                            model.addAttribute("search_product", goodsRepository.findByNameAndCategoryOrderByPriceDesc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to), 3));
+//                        } else if (contract.equals("clothes")) {
+//                            model.addAttribute("search_product", goodsRepository.findByNameAndCategoryOrderByPriceDesc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to), 2));
+//                        }
+//                    }  else {
+//                        model.addAttribute("search_product", goodsRepository.findByNameOrderByPriceDesc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to)));
+//                    }
+//                }
+//            } else {
+//                model.addAttribute("search_product", goodsRepository.findByNameAndPriceGreaterThanEqualAndPriceLessThanEqual(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to)));
+//            }
+//        } else {
+//            model.addAttribute("search_product", goodsRepository.findByNameContainingIgnoreCase(search));
 //        }
-        return "sortgood";
-    }
+//
+//        model.addAttribute("value_search", search);
+//        model.addAttribute("value_price_up", up);
+//        model.addAttribute("value_price_to", to);
+//        return "index";
+//    }
 
-    @GetMapping("/cart")
-    public String getCart(Model model){
-        return "cart";
-    }
+//    @GetMapping("/user/product/fullcart")
+//    public String getTemplateAddProductInCart(Model model){
+//        model.addAttribute("cart", new Cart());
+//        return "fullcart";
+//    }
+//
+//    @PostMapping("/user/product/fullcart")
+//    public String addProductInCart(@ModelAttribute("cart") Cart cart, HttpServletRequest request){
+//        HttpSession session = request.getSession();
+//
+//        Cart cartSession = (Cart) session.getAttribute("cart");
+//        cartSession = new Cart();
+//        cartSession.setName(cart.getName());
+//        cartSession.setPrice(cart.getPrice());
+//        cartSession.setWeight(cart.getWeight());
+//        session.setAttribute("cart", cartSession);
+//        return "redirect:/fullcart";
+//
+//    }
 
-    @GetMapping("/user/product/fullcart")
-    public String getTemplateAddProductInCart(Model model){
-        model.addAttribute("cart", new Cart());
-        return "fullcart";
-    }
-
-    @PostMapping("/user/product/fullcart")
-    public String addProductInCart(@ModelAttribute("cart") Cart cart, HttpServletRequest request){
-        HttpSession session = request.getSession();
-
-        Cart cartSession = (Cart) session.getAttribute("cart");
-        cartSession = new Cart();
-        cartSession.setName(cart.getName());
-        cartSession.setPrice(cart.getPrice());
-        cartSession.setQuantity(cart.getQuantity());
-        session.setAttribute("cart", cartSession);
-        return "redirect:/cart";
-
-    }
+//    @GetMapping("/product/research")
+//    public String productSearch2 (Model model) {
+//        model.addAttribute("productAll", goodOperations.getAllProducts());
+//        return "search";
+//    }
+//    @PostMapping("/product/research")
+//    public String productSearch2(@RequestParam("sort") String sortSubmit, Model model, @RequestParam("up") String up, @RequestParam("to") String to){
+//            if(!up.isEmpty() && !to.isEmpty()){
+//                model.addAttribute("value_search", sortSubmit);
+//                model.addAttribute("value_price_up", up);
+//                model.addAttribute("value_price_to", to);
+//                model.addAttribute("ProductS", goodsRepository.findByNameAndPriceGreaterThanEqualAndPriceLessThanEqual(sortSubmit.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to)));
+//        }
+//        model.addAttribute("productS", goodOperations.getProductNameStartingWith(sortSubmit));
+//        return "search";
+//    }
+//
+//    @PostMapping("/product/error")
+//    public String productSearch2(@RequestParam("search") String search, @RequestParam("up") String up, @RequestParam("to") String to, @RequestParam(value = "price", required = false, defaultValue = "") String price, @RequestParam(value = "contract", required = false, defaultValue = "")String contract, Model model){
+//        model.addAttribute("product", goodOperations.getAllProducts());
+//
+//        if(!up.isEmpty() & !to.isEmpty()){
+//            if(!price.isEmpty()){
+//                if(price.equals("sorted_by_ascending_price")) {
+//                    if (!contract.isEmpty()) {
+//                        if (contract.equals("furniture")) {
+//                            model.addAttribute("search_product", goodsRepository.findByNameAndCategoryOrderByPriceAsc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to), 1));
+//                        } else if (contract.equals("appliances")) {
+//                            model.addAttribute("search_product", goodsRepository.findByNameAndCategoryOrderByPriceAsc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to), 3));
+//                        } else if (contract.equals("clothes")) {
+//                            model.addAttribute("search_product", goodsRepository.findByNameAndCategoryOrderByPriceAsc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to), 2));
+//                        }
+//                    } else {
+//                        model.addAttribute("search_product", goodsRepository.findByNameOrderByPriceAsc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to)));
+//                    }
+//                } else if(price.equals("sorted_by_descending_price")){
+//                    if(!contract.isEmpty()){
+//                        if(contract.equals("furniture")){
+//                            model.addAttribute("search_product", goodsRepository.findByNameAndCategoryOrderByPriceDesc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to), 1));
+//                        }else if (contract.equals("appliances")) {
+//                            model.addAttribute("search_product", goodsRepository.findByNameAndCategoryOrderByPriceDesc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to), 3));
+//                        } else if (contract.equals("clothes")) {
+//                            model.addAttribute("search_product", goodsRepository.findByNameAndCategoryOrderByPriceDesc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to), 2));
+//                        }
+//                    }  else {
+//                        model.addAttribute("search_product", goodsRepository.findByNameOrderByPriceDesc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to)));
+//                    }
+//                }
+//            } else {
+//                model.addAttribute("search_product", goodsRepository.findByNameAndPriceGreaterThanEqualAndPriceLessThanEqual(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to)));
+//            }
+//        } else {
+//            model.addAttribute("search_product", goodsRepository.findByNameContainingIgnoreCase(search));
+//        }
+//
+//        model.addAttribute("value_search", search);
+//        model.addAttribute("value_price_up", up);
+//        model.addAttribute("value_price_to", to);
+//        return "error";
+//    }
 
 }

@@ -7,45 +7,63 @@
 </head>
 <body style="background-image: url(/static/img/backgroundl.jpg)">
 <header>
-    <a href="/product" class="underline-one">Товары</a>
+    <a href="/admin/product" class="underline-one">Товары</a>
     <a href="/admin" class="underline-one">Администратор</a>
 </header>
 <h3>Добавление товара</h3>
-<form th:method="POST" th:action="@{/product/add}" th:object="${product}" enctype="multipart/form-data">
-    <label for="name">Введите наименование товара: </label>
+<form th:method="POST" th:action="@{/admin/product/add}" th:object="${product}" enctype="multipart/form-data">
+    <label for="name">Наименование товара: </label>
     <input type="text" th:field="*{name}" id="name">
     <div class="incorrectFieldForm" style="color: red; background: white" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
     <br>
-    <label for="price">Введите цену товара (в рублях): </label>
+    <label for="price">Цена товара (в рублях): </label>
     <input type="text" th:field="*{price}" id="price" required>
     <div class="incorrectFieldForm" style="color: red; background: white" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
     <br>
-    <label for="weight">Введите вес товара (в граммах): </label>
+    <label for="weight">Вес товара (в граммах): </label>
     <input type="text" th:field="*{weight}" id="weight" required>
     <div class="incorrectFieldForm" style="color: red; background: white" th:if="${#fields.hasErrors('weight')}" th:errors="*{weight}"></div>
     <br>
-    <label for="selectGoodProvider">Выберите поставщика: </label>
-    <select id="selectGoodProvider" th:field="*{provider}">
-        <option th:each="enum : ${T(com.example.project.enumm.Provider).values()}"
-        th:text="${enum.getDisplayValue()}"
-                th:value = "${enum}" >
-            <!--${T - получает знач. из файла -->
-        </option>
+    <label for="category">Выберите категорию товара: </label>
+    <p></p>
+        <select class="field" name="category" th:field="*{category}" id="category">
+        <div th:each="element : ${category}">
+            <option th:text="${element.getName()}" th:value="${element.getId()}">
+        </div>
+        </select>
+    <a href="/admin/product/setcategory" class="linkForm">Добавить категорию</a>
+            <p></p>
+    <label for="warehouse">Выберите склад: </label>
+        <select class="field" name="warehouse" th:field="*{warehouse}" id="warehouse"><
+    <div th:each="warehouse : ${warehouse}">
+        <option th:text="${warehouse.getName()}" th:value="${warehouse.getId()}">
+    </div>
     </select>
-    <p><input type="file" name="file" id="file"></p>
+    <a href="/admin/product/setwarehouse" class="linkForm">Добавить склад</a>
+    <p></p>
+    <label for="description">Описание товара: </label>
+    <input type="text" th:field="*{description}" id="description">
+    <div class="incorrectFieldForm" style="color: red; background: white" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+    <p></p>
+    <label for="category">Выберите продавца: </label>
+        <select class="field" name="productOwner" th:field="*{productOwner}" id="productOwner">
+    <div th:each="productOwner : ${productOwner}">
+        <option th:text="${productOwner.getName()}" th:value="${productOwner.getId()}">
+    </div>
+    </select>
+    <a href="/admin/product/setproductowner" class="linkForm">Добавить продавца</a>
+    <p></p>
+    <label for="warehouse">Производитель: </label>
+    <input type="text" th:field="*{producer}" placeholder="Производитель" id="producer">
+    <div class="incorrectFieldForm" style="color: red; background: white" th:if="${#fields.hasErrors('producer')}" th:errors="*{producer}"></div>
+    <p>
+    <p style="color: red">Фотографии. Минимум одно фото. Дополнительные изображения вы можете добавить в разделе "Редактировать товар"</p>
+    <input type="file" name="file_one" required>
+    </p>
     <hr class="hr-vertical-gradient">
-    <style>
-        .hr-vertical-gradient {
-            margin: 20px 0;
-            padding: 0;
-            height: 10px;
-            border: none;
-            background: linear-gradient(180deg, orange, blue);
-        }
-    </style>
     <div class="keysblock">
     <input type="submit" value="Добавить" class="key">
-    <a href="/product" class="link">Отмена</a>
+    <a href="/admin/product" class="link">Отмена</a>
     </div>
     <p></p>
 </form>

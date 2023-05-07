@@ -8,25 +8,27 @@
 <body style="background-image: url(/static/img/backgroundl.jpg)">
 <header>
     <a href="/admin" class="underline-one">Администратор</a>
-    <a href="/product/add" class="underline-one">Добавить товар</a>
-    <a href="/product/sortgood" class="underline-one">Поиск товара</a>
+    <a href="/admin/product/add" class="underline-one">Добавить товар</a>
+    <a href="/admin/product/sortgood" class="underline-one">Поиск товара</a>
+    <a href="/admin/product/category" class="underline-one">Категории товара</a>
+    <a href="/admin/product/warehouse" class="underline-one">Склады</a>
+    <a href="/admin/product/productowner" class="underline-one">Продавцы</a>
 </header>
 <p></p>
+<h1>Список товаров</h1>
 <form>
-<div th:each="product : ${product}" id="userlist"><!--each позволяет перебрать все продукты из листа ${product} - обращение к модели-->
-    <a th:href="@{/product/{id}(id=${product.getId()})}" th:text="${product.getId()}+'. '+${product.getName()}"></a>
-</div>
-    <p></p>
+<div th:each="product : ${productAll}">
+    <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="300px">
+    <br>
+    <a th:href="@{/admin/product/{id}(id=${product.getId()})}" th:text="${product.getName()}"></a>
+    <p th:text="'Цена: ' + ${product.getPrice()}"></p>
     <hr class="hr-vertical-gradient">
-    <style>
-        .hr-vertical-gradient {
-            margin: 20px 0;
-            padding: 0;
-            height: 10px;
-            border: none;
-            background: linear-gradient(180deg, orange, blue);
-        }
-    </style>
+    <div class="keysblock">
+        <a class="key" th:href="@{/admin/product/edit/{id}(id=${product.getId()})}">Редактирование товара</a>
+        <a class="key" th:href="@{/admin/product/delete/{id}(id=${product.getId()})}">Удаление товара</a>
+    </div>
+
+</div>
     <p></p>
 </form>
 </body>

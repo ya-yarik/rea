@@ -2,37 +2,35 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/static/styles/styleforadmin.css">
+    <link rel="stylesheet" href="/static/styles/style.css">
     <title>Информация о продукте</title>
 </head>
 <body style="background-image: url(/static/img/backgroundl.jpg)">
 <header>
-    <a href="/product" class="underline-one">Товары</a>
-    <a href="/admin" class="underline-one">Администратор</a>
+
 </header>
+
 <form>
-<!--img/example.jpg = D:\project\uploads\example.jpg-->
-<img th:src="'/img/'+${product.getFilePic()}">
+<div>
 <p th:text="'Товар № ' + ${product.getId()}"></p>
 <p th:text="'Наименование: ' + ${product.getName()}"></p>
 <p th:text="'Цена(в рублях) : ' + ${product.getPrice()}"></p>
 <p th:text="'Вес (в граммах): ' + ${product.getWeight()}"></p>
-<p th:text="'Поставщик: ' + ${product.getProvider()}"></p>
+<p th:text="'Cклад: ' + ${product.getWarehouse().getName()}"></p>
+<p th:text="'Продавец: ' + ${product.getProductOwner().getName()}"></p>
+<p th:text="'Категория: ' + ${product.getCategory().getName()}"></p>
+<div th:each="img : ${product.getImageList()}">
+    <img th:src="'/img/' + ${img.getFileName()}">
+</div>
+</div>
 <p></p>
 <hr class="hr-vertical-gradient">
-<style>
-    .hr-vertical-gradient {
-        margin: 20px 0;
-        padding: 0;
-        height: 10px;
-        border: none;
-        background: linear-gradient(180deg, orange, blue);
-    }
-</style>
+
 <div class="keysblock">
-<a class="key" th:href="@{/product/edit/{id}(id=${product.getId()})}">Редактирование товара</a>
-<a class="key" th:href="@{/product/delete/{id}(id=${product.getId()})}">Удаление товара</a>
-<a href="/admin/users" class="link">Отмена</a>
+<a class="key" th:href="@{/admin/product/edit/{id}(id=${product.getId()})}">Редактирование товара</a>
+<a class="key" th:href="@{/admin/product/delete/{id}(id=${product.getId()})}">Удаление товара</a>
+<a href="/admin/product" class="link">Отмена</a>
+<hr class="hr-vertical-gradient">
 </div>
     <p></p>
 </form>

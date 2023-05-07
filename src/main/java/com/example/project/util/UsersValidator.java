@@ -1,6 +1,6 @@
 package com.example.project.util;
 
-import com.example.project.models.Users;
+import com.example.project.models.UserModel;
 import com.example.project.services.UsersServices;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -18,12 +18,12 @@ public class UsersValidator implements Validator {
     // В данном методу указываем для какой модели предназначен данный валидатор
     @Override
     public boolean supports(Class<?> clazz) {
-        return Users.class.equals(clazz);
+        return UserModel.class.equals(clazz);
     }
 
     @Override
     public void validate(Object target, Errors errors) {
-        Users users = (Users) target;
+        UserModel users = (UserModel) target;
         if(usersService.findByLogin(users) != null){
             errors.rejectValue("login", "", "Данный логин уже зарегистрирован в системе");
         }

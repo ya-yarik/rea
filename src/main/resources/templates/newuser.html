@@ -7,7 +7,7 @@
 </head>
 <body style="background-image: url(/static/img/backgroundl.jpg)">
 <header>
-  <a href="/index/auth/admin" class="underline-one">Администратор</a>
+  <a href="/admin" class="underline-one">Администратор</a>
 </header>
 <h1>Форма добавления нового пользователя</h1>
 <form th:method="POST" th:action="@{/admin/users/newuser}" th:object="${userForm}" enctype="multipart/form-data">

@@ -4,13 +4,14 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import jakarta.validation.constraints.Email;
 
+import java.util.List;
 import java.util.Objects;
 
 
 //@Entity
 //@Table(name = "shop_users")
 @Entity(name = "shop_users")
-public class Users {
+public class UserModel {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,14 +29,14 @@ public class Users {
     @Column(name = "role")
     private String role;
 
-//    @NotEmpty(message = "Поле 'Фамилия' не может быть пустым")
-      @Size(min=2, max=30, message="Фамилия должна быть в диапазоне от 2 до 30 символов")
+    //    @NotEmpty(message = "Поле 'Фамилия' не может быть пустым")
+    @Size(min=2, max=30, message="Фамилия должна быть в диапазоне от 2 до 30 символов")
 //    @Column (name = "surname", length = 30, nullable=false, columnDefinition = "text")
     @Column (name = "surname", length = 30, nullable=true, columnDefinition = "text")
     private String surname;
 
-//    @NotEmpty(message = "Поле 'Имя' не может быть пустым")
-      @Size(min=2, max=30, message="Имя должно быть в диапазоне от 2 до 30 символов")
+    //    @NotEmpty(message = "Поле 'Имя' не может быть пустым")
+    @Size(min=2, max=30, message="Имя должно быть в диапазоне от 2 до 30 символов")
 //    @Column (name = "name", length = 30, nullable=false, columnDefinition = "text")
     @Column (name = "name", length = 30, nullable=true, columnDefinition = "text")
     private String name;
@@ -50,6 +51,9 @@ public class Users {
     @Column (name = "age", length = 3, nullable=true, columnDefinition="int")
     private int age;
 
+    @Column (name = "address", length = 200, columnDefinition = "text")
+    private String address;
+
     @NotEmpty(message="Поле 'E-mail' является обязательным")
     @Email(message="Вы ввели недопустимые символы")
     @Column (name = "email", length = 30, nullable=false, unique = true, columnDefinition = "text")
@@ -62,18 +66,35 @@ public class Users {
 
     private String filePic;
 
-    public Users(int id, String surname, String name, String patronymic, int age, String email, String phone, String filePic) {
-        this.id = id;
-        this.surname = surname;
-        this.name = name;
-        this.patronymic = patronymic;
-        this.age = age;
-        this.email = email;
-        this.phone = phone;
-        this.filePic = filePic;
+    @ManyToMany()
+    @JoinTable(name = "cart", joinColumns = @JoinColumn(name = "person_id"),inverseJoinColumns = @JoinColumn(name = "product_id"))
+    private List<Product> productList;
+
+    @OneToMany(mappedBy = "users", fetch = FetchType.EAGER)
+    private List<Orders> orderList;
+
+
+//    public Users(int id, String surname, String name, String patronymic, int age, String email, String phone, String filePic) {
+//        this.id = id;
+//        this.surname = surname;
+//        this.name = name;
+//        this.patronymic = patronymic;
+//        this.age = age;
+//        this.email = email;
+//        this.phone = phone;
+//        this.filePic = filePic;
+//    }
+//
+//    public Users() {
+//    }
+
+
+    public String getAddress() {
+        return address;
     }
 
-    public Users() {
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public int getId() {
@@ -82,6 +103,30 @@ public class Users {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getSurname() {
@@ -140,35 +185,27 @@ public class Users {
         this.filePic = filePic;
     }
 
-    public String getLogin() {
-        return login;
+    public List<Product> getProductList() {
+        return productList;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setProductList(List<Product> productList) {
+        this.productList = productList;
     }
 
-    public String getPassword() {
-        return password;
+    public List<Orders> getOrderList() {
+        return orderList;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
+    public void setOrderList(List<Orders> orderList) {
+        this.orderList = orderList;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Users users = (Users) o;
+        UserModel users = (UserModel) o;
         return id == users.id && Objects.equals(login, users.login) && Objects.equals(password, users.password);
     }
 
@@ -181,12 +218,17 @@ public class Users {
     public String toString() {
         return "Users{" +
                 "id=" + id +
+                ", login='" + login + '\'' +
+                ", role='" + role + '\'' +
                 ", surname='" + surname + '\'' +
                 ", name='" + name + '\'' +
                 ", patronymic='" + patronymic + '\'' +
                 ", age=" + age +
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
+                ", filePic='" + filePic + '\'' +
+                ", productList=" + productList +
+                ", orderList=" + orderList +
                 '}';
     }
 }

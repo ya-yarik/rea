@@ -1,4 +1,4 @@
-package com.example.project.models;
+package com.example.project.models.deactactivated;
 
 public class Avtorization {
 

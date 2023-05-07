@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/static/styles/styleforadmin.css">
+    <link rel="stylesheet" href="/static/styles/style.css">
 
   <title>Список пользователей</title>
 </head>
@@ -17,17 +17,6 @@
   <a th:href="@{/admin/users/{id}(id=${user.getId()})}" th:text="${user.getId()+'. '+user.getSurname()+' '+user.getName()+' '+user.getPatronymic()}"></a>
 
   <hr class="hr-double">
-
-  <style>
-    .hr-double {
-      margin: 20px 0;
-      padding: 0;
-      height: 1px;
-      border: none;
-      border-top: 1px solid #333;
-      border-bottom: 1px solid #333;
-    }
-  </style>
 
     <p></p>
 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/static/styles/styleforadmin.css">
+    <link rel="stylesheet" href="/static/styles/style.css">
     <title>Карточка пользователя</title>
 </head>
 <body style="background-image: url(/static/img/backgroundl.jpg)">
@@ -11,7 +11,7 @@
     <a href="/admin/users" class="underline-one">Пользователи</a>
 </header>
 <h1>Карточка пользователя</h1>
-<div id="userlist">
+<div class="staticform">
     <img th:src="'/img/'+${userForm.getFilePic()}">
     <p><u>Фамилия:</u><nobr th:text="' '+${userForm.getSurname()}"></nobr></p>
     <p><u>Имя:</u><nobr th:text="' '+${userForm.getName()}"></nobr></p>
@@ -19,23 +19,74 @@
     <p><u>Возраст:</u><nobr th:text="' '+${userForm.getAge()}"></nobr></p>
     <p><u>Электронная почта:</u><nobr th:text="' '+${userForm.getEmail()}"></nobr></p>
     <p><u>Телефон:</u><nobr th:text="' '+${userForm.getPhone()}"></nobr></p>
+    <p><u>Роль:</u><nobr th:text="' '+${userForm.getRole()}"></nobr></p>
 
-<hr class="hr-vertical-gradient">
-<style>
-    .hr-vertical-gradient {
-        margin: 20px 0;
-        padding: 0;
-        height: 10px;
-        border: none;
-        background: linear-gradient(180deg, orange, blue);
-    }
-</style>
-    <div class="keysblock">
+
+    <form class ="staticform" th:method="POST" th:action="@{/admin/user/changerole/{id}(id=${userForm.getId()})}" th:object="${userForm}" enctype="multipart/form-data">
+        <p><label for="surn" hidden>Фамилия: </label></p>
+        <input type="hidden" th:field="*{surname}" id="surn">
+        <div class="incorrectFieldForm" style="color: red; background: white" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></div>
+
+        <p><label for="nam" hidden>Имя: </label></p>
+        <input type="hidden" th:field="*{name}" id="nam">
+        <div class="incorrectFieldForm" style="color: red; background: white" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+
+        <p><label for="patron" hidden>Отчество: </label></p>
+        <input type="hidden" th:field="*{patronymic}" id="patron">
+        <div style="color: red" th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></div>
+
+        <p><label for="login" hidden>Логин: </label></p>
+        <input type="hidden" th:field="*{login}" id="login">
+        <div style="color: red" th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></div>
+
+        <p><label for="password" hidden>Пароль: </label></p>
+        <input type="hidden" th:field="*{password}" id="password">
+
+        <p><label for="years" hidden>Возраст: </label></p>
+        <input type="hidden" th:field="*{age}" id="years" required>
+        <div class="incorrectFieldForm" style="color: red; background: white" th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></div>
+
+        <p><label for="mail" hidden>E-mail: </label></p>
+        <input type="hidden" th:field="*{email}" id="mail">
+        <div class="incorrectFieldForm" style="color: red; background: white" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+
+        <p><label for="address" hidden>Адрес: </label></p>
+        <input type="hidden" th:field="*{address}" id="address">
+        <div class="incorrectFieldForm" style="color: red; background: white" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></div>
+
+        <p><label for="tel" hidden>Телефон: </label></p>
+        <input type="hidden" th:field="*{phone}" id="tel">
+        <div class="incorrectFieldForm" style="color: red; background: white" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></div>
+
+        <p><label for="productList" hidden>Продукты: </label></p>
+        <input type="hidden" th:field="*{productList}" id="productList">
+
+        <p><label for="orderList" hidden>Заказы: </label></p>
+        <input type="hidden" th:field="*{orderList}" id="orderList">
+
+        <p><label for="selectGoodProvider">Роль: </label></p>
+        <select id="selectGoodProvider" th:field="*{role}" required>
+            <option th:each="enum : ${T(com.example.project.enumm.Roles).values()}"
+                    th:text="${enum.getDisplayValue()}"
+                    th:value = "${enum}" >
+            </option>
+        </select>
+
+
+        <p><input type="file" name="file" id="file" hidden></p>
+
+        <hr class="hr-vertical-gradient">
+
+        <p></p>
+
+<div class="keysblock">
+<input type="submit" value="Сменить роль" class="key">
 <a th:href="@{/admin/users/edit/{id}(id=${userForm.getId()})}" class="link">Редактировать данные</a>
 <a th:href="@{/admin/users/delete/{id}(id=${userForm.getId()})}" class="link">Удалить данные</a>
 <a href="/admin" class="link">Отмена</a>
     <p></p>
     </div>
+    </form>
 </div>
 </body>
 </html>

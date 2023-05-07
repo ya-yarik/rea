@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="/static/styles/styleforadmin.css">
+  <link rel="stylesheet" href="/static/styles/style.css">
   <title>Сортировка и поиск товаров</title>
 </head>
 <body style="background-image: url(/static/img/backgroundl.jpg)">
@@ -10,7 +10,7 @@
   <a href="/admin" class="underline-one">Администратор</a>
 </header>
 <h1>Поиск, сортировка, фильтрация товаров</h1>
-<form method="post" th:action="@{/product/sortgood}">
+<form method="post" th:action="@{/admin/product/sortgood}">
   <p><label for="sortUser">Выберите параметр сортировки или фильтрации:</label></p>
 
   <p><select id="sortUser" name="sortgood">
@@ -22,22 +22,12 @@
 
   <p><input type="text" name="sort"></p>
   <hr class="hr-vertical-gradient">
-  <style>
-    .hr-vertical-gradient {
-      margin: 20px 0;
-      padding: 0;
-      height: 10px;
-      border: none;
-      background: linear-gradient(180deg, orange, blue);
-    }
-  </style>
   <div class="keysblock">
     <button type="submit" class="key">Выполнить</button>
   </div>
   <hr class="hr-vertical-gradient">
   <div id="userlist" th:each="element : ${goodT}">
     <p><u>Наименование: </u><nobr th:text="' ' + ${element.getName()}"></nobr></p>
-    <p><u>Поставщик: </u><nobr th:text="' ' + ${element.getProvider()}"></nobr></p>
     <p><u>Вес: </u><nobr th:text="' ' + ${element.getWeight()}"></nobr></p>
     <p><u>Цена: </u><nobr th:text="' ' + ${element.getPrice()}"></nobr></p>
   </div>

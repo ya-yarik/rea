@@ -1,6 +1,7 @@
 package com.example.project.services;
 
-import com.example.project.models.Users;
+import com.example.project.models.UserModel;
+
 import com.example.project.repositories.UsersRepository;
 import com.example.project.security.UsersDetails;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class UsersDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username)  throws UsernameNotFoundException {
         // Получаем пользователя из таблицы по логину с формы аутентификации
-        Optional<Users> user = usersRepository.findByLogin(username);
+        Optional<UserModel> user = usersRepository.findByLogin(username);
         // Если пользователь не был найден
         if(user.isEmpty()){
             // Выбрасываем исключение что данный пользователь не найден

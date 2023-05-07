@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/styles/styleforadmin.css">
+
+    <title>Список складов</title>
+</head>
+<body style="background-image: url(/static/img/backgroundl.jpg)">
+<header>
+    <a href="/admin" class="underline-one">Администратор</a>
+    <a href="/admin/product" class="underline-one">Товары</a>
+    <a href="/admin/product/setwarehouse" class="underline-one">Добавить склад</a>
+</header>
+<h1>Список складов</h1>
+<div th:each="warehouse : ${warehouse}" id="userlist">
+    <a th:href="@{/admin/product/warehouse/{id}(id=${warehouse.getId()})}" th:text="${warehouse.getId()+'. '+warehouse.getName()}"></a>
+
+    <hr class="hr-double">
+
+    <p></p>
+
+</div>
+</body>
+</html>

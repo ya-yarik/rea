@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/styles/style.css">
+    <script src="/static/js/furtherDropDown.js"></script>
+    <title>Список товаров</title>
+</head>
+<body style="background-image: url(/static/img/backgroundl.jpg)">
+<header>
+
+    <div class="dropdown">
+        <button onclick="furtherDropDownR()" class="dropbtn">О нас</button>
+        <div id="myDropdown_1" class="dropdown-content">
+            <a href="/" class="underline-one">О магазине</a>
+            <a href="/" class="underline-one">Реквизиты</a>
+            <a href="/" class="underline-one">Контакты</a>
+            <a href="/" class="underline-one">Соцсети</a>
+            <a href="/" class="underline-one">Вакансии</a>
+        </div>
+    </div>
+
+    <div class="dropdown">
+        <button onclick="furtherDropDown()" class="dropbtn">Помощь</button>
+        <div id="myDropdown" class="dropdown-content">
+            <a href="/" class="underline-one">Пункты выдачи</a>
+            <a href="/" class="underline-one">Как сделать заказ</a>
+            <a href="/" class="underline-one">Оплата</a>
+            <a href="/" class="underline-one">Доставка</a>
+            <a href="/" class="underline-one">Возврат</a>
+            <a href="/" class="underline-one">Условия обработки данных</a>
+        </div>
+    </div>
+
+    <div class="dropdown">
+        <button onclick="furtherDropDownK()" class="dropbtn">Вход/Регистрация</button>
+        <div id="myDropdown_2" class="dropdown-content">
+            <a href="/registration" class="underline-one">Регистрация</a>
+            <a href="/auth" class="underline-one">Авторизация</a>
+        </div>
+    </div>
+
+</header>
+<p></p>
+<h1>Список товаров</h1>
+<table>
+    <tr><td id="mainpage">
+
+
+
+        <form>
+            <p></p>
+            <div th:each="product : ${productS}">
+                <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="95%" height="71%">
+                <br>
+                <a th:href="@{/product/{id}(id=${product.getId()})}" th:text="${product.getName()}"></a>
+                <p th:text="'Цена: ' + ${product.getPrice()}"></p>
+                <hr class="hr-vertical-gradient">
+            </div>
+            <p></p>
+        </form>
+
+    </td><td id="searchBlock">
+        <form class="searchForm" th:method="POST" th:action="@{/index/search}">
+            <label for="sort">Поиск</label>
+            <p><input type="text" name="sort" id="sort" placeholder="Что ищете?"></p>
+
+
+            <hr class="hr-vertical-gradient">
+            <div class="keysblock">
+                <button type="submit" class="key">Выполнить</button>
+                <a href="/main" class="link">Расширенный поиск</a>
+            </div>
+
+            <hr class="hr-vertical-gradient">
+
+        </form>
+
+
+    </td></tr></table>
+</body>
+</html>

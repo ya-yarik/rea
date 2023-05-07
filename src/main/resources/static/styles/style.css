@@ -8,6 +8,33 @@ header {
     padding: 10px; /* Поля вокруг текста */
     transition: 1s linear; /* Время изменения */
     opacity: 0.5;
+    width: 100%;
+}
+
+table {
+    width:100%;
+}
+
+td[id="mainpage"]{
+    width:60%;
+    position: absolute;
+}
+
+td[id="searchBlock"]{
+    width:40%;
+}
+
+table {
+    width:100%;
+}
+
+td[id="mainpageProfile"]{
+    width:60%;
+    position: absolute;
+}
+
+td[id="searchBlockProfile"]{
+    width:40%;
 }
 
 header:hover {
@@ -18,9 +45,10 @@ header:hover {
 
 header a {
     font-size: 25px;
-    font-weight: 600;
+    font-weight: bold;
     border: 3px solid black;
-    border-radius: 5px;
+    border-radius: 50px;
+    padding: 5px;
 }
 
 .underline-one {
@@ -37,7 +65,7 @@ header a {
     right: 0;
     bottom: -3px;
     width: 0;
-    height: 2px; /* Высота линии */
+    height: 3px; /* Высота линии */
     background-color: black; /* Цвет подчёркивания при исчезании линии*/
     transition: width 0.5s; /* Время эффекта */
 }
@@ -111,6 +139,69 @@ form:hover {
     /*    padding-bottom: 5px;*/
 }
 
+div[class="staticform"] {
+    color: black; /* Цвет текста */
+    background: wheat; /* Цвет фона */
+    opacity: 0.8;
+    font-family: 'Times New Roman';
+    transition: 1s linear;
+    /*    font-size: 23.5px;*/
+    font-size: 20px;
+    border: 10px solid blue;
+    /*    padding-bottom: 5px;*/
+}
+
+form[class="staticform"] {
+    color: black; /* Цвет текста */
+    background: wheat; /* Цвет фона */
+    opacity: 0.8;
+    font-family: 'Times New Roman';
+    transition: 1s linear;
+    /*    font-size: 23.5px;*/
+    font-size: 20px;
+    border: 10px solid blue;
+    /*    padding-bottom: 5px;*/
+}
+
+div[class="overloginform"] {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: auto;
+    white-space: nowrap;
+    text-align: center;
+    font-size: 0;
+}
+
+div[class="overloginform"]::before {
+     height: 100%;
+     display: inline-block;
+     vertical-align: middle;
+     content: '';
+ }
+
+form[class="loginform"] {
+    align-content: center;
+    width:50%;
+    color: black; /* Цвет текста */
+    background: wheat; /* Цвет фона */
+    opacity: 0.8;
+    font-family: 'Times New Roman';
+    transition: 1s linear;
+    /*    font-size: 23.5px;*/
+    font-size: 20px;
+    border: 10px solid blue;
+    /*    padding-bottom: 5px;*/
+    display: inline-block;
+    white-space: normal;
+    vertical-align: middle;
+    text-align: left;
+}
+
+
+
 button[class="number-plus"] {
     border-radius: 100%;
     font-size: 20px;
@@ -152,7 +243,7 @@ input[type="number"] {
 
 input[type="number"]:hover {
     background: white;
-    text-align: center;
+    text-align: left;
     text-after-overflow: 15px;
 }
 
@@ -174,7 +265,7 @@ input[type="text"]{
 
 input[type="text"]:hover{
     background: white;
-    text-align: center;
+    text-align: left;
 }
 
 input[type="text"]:invalid{
@@ -194,7 +285,7 @@ input[type="password"]{
 
 input[type="password"]:hover{
     background: white;
-    text-align: center;
+    text-align: left;
 }
 
 input[type="password"]:invalid{
@@ -215,7 +306,7 @@ input[type="email"]{
 
 input[type="email"]:hover {
     background: white;
-    text-align: center;
+    text-align: left;
 }
 
 input[type="email"]:invalid {
@@ -260,7 +351,7 @@ select[id="selectvalue"] {
     height: 36px;
     width: 500px;
     align-items: center;
-    text-align: center;
+    text-align: left;
     border-radius: 3%;
     background: rgb(140, 207, 166);
     transition: 1s linear;
@@ -338,6 +429,45 @@ output[type="number"] {
     font-weight: bold;
     text-decoration: none;
 }
+
+.keygoout{
+    border: 3px solid black;
+    border-radius: 50px;
+    text-align: center;
+    color: black; /* Цвет текста */
+    background: red; /* Цвет фона */
+    padding: 5px; /* Поля вокруг текста */
+    transition: 1s linear; /* Время изменения */
+    text-underline: none;
+    align-content: center;
+    align-items: center;
+    cursor: pointer;
+    width:auto;
+    height: auto;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 24px;
+}
+
+.orders{
+    border: 3px solid black;
+    border-radius: 50px;
+    text-align: center;
+    color: black; /* Цвет текста */
+    background: green; /* Цвет фона */
+    padding: 5px; /* Поля вокруг текста */
+    transition: 1s linear; /* Время изменения */
+    text-underline: none;
+    align-content: center;
+    align-items: center;
+    cursor: pointer;
+    width:auto;
+    height: auto;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 24px;
+}
+
 .link {
     text-decoration: none;
     border: 5px solid #0caa0c;
@@ -356,6 +486,13 @@ output[type="number"] {
     height: 50%;
     cursor: pointer;
     font-weight: bold;
+}
+
+.headerlink {
+    text-decoration: none;
+    border-radius: 50px;
+    text-align: center;
+    color: black; /* Цвет текста */
 }
 
 .incorrectFieldForm{
@@ -380,7 +517,7 @@ select[id="selectGoodProvider"] {
 
 select[id="selectGoodProvider"]:hover {
     background: white;
-    text-align: center;
+    text-align: left;
 }
 
 select[id="selectGoodProvider"]:invalid {
@@ -400,32 +537,56 @@ select[id="sortUser"] {
 
 select[id="sortUser"]:hover {
     background: white;
-    text-align: center;
+    text-align: left;
 }
 
+select[id="sortOrder"] {
+    font-size: 20px;
+    height: 36px;
+    width: 98%;
+    align-items: center;
+    text-align: left;
+    background: rgb(140, 207, 166);
+    transition: 1s linear;
+}
+
+select[id="sortOrder"]:hover {
+    background: white;
+    text-align: left;
+}
 
 /**/
 .dropbtn {
     background-color: #3498DB;
-    color: white;
+    /*color: white;
     padding: 16px;
     font-size: 16px;
-    border: none;
+    border: none;*/
+    color: black;
     cursor: pointer;
+    border-radius: 50px;
+    height: 43px;
+    border: 3px solid black;
+    font-family: Times New Roman;
+    font-size: 24px;
+    font-weight: bold;
 }
 
 .dropbtn:hover, .dropbtn:focus {
     background-color: #2980B9;
+    color: gold;
 }
 
 .dropdown {
     position: relative;
     display: inline-block;
+    border-radius: 50px;
+    background-color: #2980B9;
 }
 
 .dropdown-content {
     display: none;
-    position: absolute;
+    position: relative;
     background-color: #f1f1f1;
     min-width: 160px;
     overflow: auto;
@@ -440,7 +601,7 @@ select[id="sortUser"]:hover {
     display: block;
 }
 
-.dropdown a:hover {background-color: #ddd;}
+.dropdown a:focus {background-color: #ddd;}
 
 .show {display: block;}
 

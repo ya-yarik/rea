@@ -7,25 +7,25 @@
 </head>
 <body style="background-image: url(/static/img/backgroundl.jpg)">
 <header>
-    <a href="/product" class="underline-one">Товары</a>
-    <a href="/admin/users" class="underline-one">Пользователи</a>
+    <p></p>
 </header>
-<h3>Регистрация</h3>
-<form method="post" th:actioin="@{/registration}" th:object="${users}">
+<div class="overloginform">
+    <form class="loginform" method="post" th:action="@{/registration}" th:object="${users}">
+        <center><p style="font-size:32px">Регистрация</p></center>
     <label for="login">Логин: </label>
-    <input type="text" th:field="*{login}" id="login">
+    <input type="text" th:field="*{login}" id="login" placeholder="Логин">
     <div style="color: red" th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></div>
     <br>
     <label for="password">Пароль: </label>
-    <input type="password" th:field="*{password}" id="password">
+    <input type="password" th:field="*{password}" id="password" placeholder="Пароль">
     <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
     <br>
     <label for="phone">Телефон: </label>
-    <input type="text" th:field="*{phone}" id="phone">
+    <input type="text" th:field="*{phone}" id="phone" placeholder="Телефон">
     <div style="color: red" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></div>
     <br>
     <label for="email">E-mail: </label>
-    <input type="email" th:field="*{email}" id="email">
+    <input type="email" th:field="*{email}" id="email" placeholder="E-mail">
     <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
     <br>
 
@@ -38,5 +38,6 @@
     </div>
     <p></p>
 </form>
+</div>
 </body>
 </html>

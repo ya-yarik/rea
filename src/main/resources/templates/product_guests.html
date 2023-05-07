@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="/static/styles/style.css">
+  <script src="/static/js/furtherDropDown.js"></script>
+  <title>Информация о продукте</title>
+</head>
+<body style="background-image: url(/static/img/backgroundl.jpg)">
+<header>
+
+  <div class="dropdown">
+    <button onclick="furtherDropDownA()" class="dropbtn">О нас</button>
+    <div id="myDropdown_5" class="dropdown-content">
+      <a href="/" class="underline-one">О магазине</a>
+      <a href="/" class="underline-one">Реквизиты</a>
+      <a href="/" class="underline-one">Контакты</a>
+      <a href="/" class="underline-one">Соцсети</a>
+      <a href="/" class="underline-one">Вакансии</a>
+    </div>
+  </div>
+
+  <div class="dropdown">
+    <button onclick="furtherDropDownB()" class="dropbtn">Помощь</button>
+    <div id="myDropdown_6" class="dropdown-content">
+      <a href="/" class="underline-one">Пункты выдачи</a>
+      <a href="/" class="underline-one">Как сделать заказ</a>
+      <a href="/" class="underline-one">Оплата</a>
+      <a href="/" class="underline-one">Доставка</a>
+      <a href="/" class="underline-one">Возврат</a>
+      <a href="/" class="underline-one">Условия обработки данных</a>
+    </div>
+  </div>
+
+  <div class="dropdown">
+    <button onclick="furtherDropDownC()" class="dropbtn">Вход/Регистрация</button>
+    <div id="myDropdown_7" class="dropdown-content">
+      <a href="/registration" class="underline-one">Регистрация</a>
+      <a href="/auth" class="underline-one">Авторизация</a>
+    </div>
+  </div>
+
+</header>
+<form>
+  <div>
+    <p th:text="'Товар № ' + ${product.getId()}"></p>
+    <p th:text="'Наименование: ' + ${product.getName()}"></p>
+    <p th:text="'Цена(в рублях) : ' + ${product.getPrice()}"></p>
+    <p th:text="'Вес (в граммах): ' + ${product.getWeight()}"></p>
+    <p th:text="'Cклад: ' + ${product.getWarehouse().getName()}"></p>
+    <p th:text="'Продавец: ' + ${product.getProductOwner().getName()}"></p>
+    <p th:text="'Категория: ' + ${product.getCategory().getName()}"></p>
+    <div th:each="img : ${product.getImageList()}">
+      <img th:src="'/img/' + ${img.getFileName()}">
+    </div>
+  </div>
+  <p></p>
+  <hr class="hr-vertical-gradient">
+
+  <div class="keysblock">
+    <a class="key" th:href="@{/profile/cart/add/{id}(id=${product.getId()})}">Купить</a>
+    <a href="/" class="link">Выбрать другой товар</a>  </div>
+  <p></p>
+</form>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="/styles/style.css">
+  <title>Заказ</title>
+</head>
+<body style="background-image: url(/static/img/backgroundl.jpg)">
+<header>
+  <a href="/profile" class="underline-one">Мой профиль</a>
+  <a href="/profile/cart" class="underline-one">Корзина</a>
+  <a href="/logout" class="keygoout">Выйти</a>
+</header>
+<h3>Ваши заказы </h3>
+<div class="staticform" th:each="order : ${orders}">
+  <h3 th:text="'Заказ №' + ${order.getNumber()}"></h3>
+  <img th:src="'/img/' + ${order.getProduct().getImageList()[0].getFileName()}" width="300px">
+  <p th:text="'Наименование: ' + ${order.getProduct().getName()}">
+  <p th:text="'Цена: ' + ${order.getPrice()}">
+  <p th:text="'Дата заказа: ' + ${#temporals.format(order.getDateTime(), 'dd-MMM-yyyy')}"></p>
+  <p th:text="'Cтатус: ' + ${order.getStatuses()}">
+</div>
+<hr class="hr-vertical-gradient">
+</body>
+</html>

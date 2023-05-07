@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/styles/styleforadmin.css">
+    <title>Добавление категории</title>
+</head>
+<body style="background-image: url(/static/img/backgroundl.jpg)">
+<header>
+    <a href="/admin/product" class="underline-one">Товары</a>
+    <a href="/admin" class="underline-one">Администратор</a>
+</header>
+<h3>Добавление категории</h3>
+<form th:method="POST" th:action="@{/admin/product/setcategory}" th:object="${setcategory}" enctype="multipart/form-data">
+    <label for="name">Наименование категории: </label>
+    <input type="text" th:field="*{name}" id="name">
+    <div class="incorrectFieldForm" style="color: red; background: white" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+    <hr class="hr-vertical-gradient">
+    <div class="keysblock">
+        <input type="submit" value="Добавить" class="key">
+        <a href="/admin/product" class="link">Отмена</a>
+    </div>
+    <p></p>
+</form>
+</body>
+</html>

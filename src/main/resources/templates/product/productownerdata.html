@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/styles/styleforadmin.css">
+    <title>Продавец</title>
+</head>
+<body style="background-image: url(/static/img/backgroundl.jpg)">
+<header>
+    <a href="/admin" class="underline-one">Администратор</a>
+    <a href="/admin/product" class="underline-one">Товары</a>
+    <a href="/admin/product/productowner" class="underline-one">Продавцы</a>
+</header>
+<h1 text="Продавец № " th:src="${product_owner.getId()}"></h1>
+<div id="userlist">
+    <p><u>Название: </u><nobr th:text="' '+${product_owner.getName()}"></nobr></p>
+    <p><u>Адрес:</u><nobr th:text="' '+${product_owner.getAddress()}"></nobr></p>
+    <p><u>Телефон:</u><nobr th:text="' '+${product_owner.getPhone()}"></nobr></p>
+    <p></p><u>E-mail:</u><nobr th:text="' '+${product_owner.getEmail()}"></nobr></p>
+    <p></p><u>Регистрационный документ (тип):</u><nobr th:text="' '+${product_owner.getTypeRegDoc()}"></nobr></p>
+    <p></p><u>Регистрационный документ (серия, номер, реквизиты):</u><nobr th:text="' '+${product_owner.getRegDoc()}"></nobr></p>
+
+    <hr class="hr-vertical-gradient">
+    <div class="keysblock">
+        <a th:href="@{/admin/product/delete/productowner/{id}(id=${product_owner.getId()})}" class="link">Удалить продавца</a>
+        <p></p>
+    </div>
+</div>
+</body>
+</html>

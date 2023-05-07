@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/styles/style.css">
+    <title>Заказ</title>
+</head>
+<body style="background-image: url(/static/img/backgroundl.jpg)">
+<header>
+    <a href="/admin" class="underline-one">Администратор</a>
+    <a href="/admin/orders" class="underline-one">Заказы</a>
+</header>
+<h1>Заказ</h1>
+<div class="staticform">
+    <p><u><b>Время заказа: </b></u><nobr th:text="' '+${order.getDateTime()}"></nobr></p>
+    <p><u><b>Статус: </b></u><nobr th:text="' '+${order.getStatuses()}"></nobr></p>
+    <p><u><b>Номер заказа: </b></u><nobr th:text="' '+${order.getNumber()}"></nobr></p>
+    <p></p>
+    <p></p>
+    <p><u><b>Товары: </b></u></p>
+        <p><nobr th:text="'Название: '+${order.getProduct().getName()}"></nobr></p>
+        <p><nobr th:text="'Цена: '+${order.getProduct().getPrice()}+' рублей'"></nobr></p>
+        <p><nobr th:text="'Вес: '+${order.getProduct().getWeight()}+' грамм'"></nobr></p>
+        <p><nobr th:text="'Склад: '+${order.getProduct().getWarehouse().getName()}"></nobr></p>
+    <p><u><b>Количество единиц товара: </b></u><nobr th:text="' '+${order.getCount()}"></nobr></p>
+    <p><u><b>Цена: </b></u><nobr th:text="' '+${order.getPrice()}"></nobr></p>
+    <p></p>
+    <p></p>
+    <p><u><b>Заказчик: </b></u></p>
+        <p><nobr th:text="'Логин: '+${order.getUsers().getLogin()}"></nobr></p>
+        <p><nobr th:text="'Фамилия: '+${order.getUsers().getSurname()}"></nobr></p>
+        <p><nobr th:text="'Имя: '+${order.getUsers().getName()}"></nobr></p>
+        <p><nobr th:text="'Отчество: '+${order.getUsers().getPatronymic()}"></nobr></p>
+        <p><nobr th:text="'Адрес: '+${order.getUsers().getAddress()}"></nobr></p>
+        <p><nobr th:text="'Телефон: '+${order.getUsers().getPhone()}"></nobr></p>
+        <p><nobr th:text="'Электронная почта: '+${order.getUsers().getEmail()}"></nobr></p>
+
+    <hr class="hr-vertical-gradient">
+
+<form class="staticform" th:method="POST" th:action="@{/admin/order/edit/{id}(id=${order.getId()})}" th:object="${order}" enctype="multipart/form-data">
+    <h1 style="color: black">Изменение статуса заказа</h1>
+    <label for="count" hidden>Количество товара: </label>
+    <input type="hidden" th:field="*{count}" id="count">
+    <label for="dateTime" hidden>Время заказа: </label>
+    <input type="hidden" th:field="*{dateTime}" id="dateTime">
+    <label for="price" hidden>Цена товара (в рублях): </label>
+    <input type="hidden" th:field="*{price}" id="price">
+    <label for="product" hidden>ID товара: </label>
+    <input type="hidden" th:field="*{product}" id="product">
+    <label for="users" hidden>ID заказчика: </label>
+    <input type="hidden" th:field="*{users}" id="users">
+    <label for="number" hidden>Номер заказа: </label>
+    <input type="hidden" th:field="*{number}" id="number">
+    <label for="selectGoodProvider"></label>
+    <select id="selectGoodProvider" th:field="*{statuses}" required>
+        <option th:each="enum : ${T(com.example.project.enumm.Statuses).values()}"
+                th:text="${enum.getDisplayValue()}"
+                th:value = "${enum}" >
+        </option>
+    </select>
+    <hr class="hr-vertical-gradient">
+    <div class="keysblock">
+        <input type="submit" value="Изменить" class="key">
+        <a href="/admin/orders" class="link">Отмена</a>
+    </div>
+    <p></p>
+</form>
+</div>
+
+</body>
+</html>

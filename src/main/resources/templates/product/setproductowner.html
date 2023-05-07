@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/styles/styleforadmin.css">
+    <title>Добавление продавца</title>
+</head>
+<body style="background-image: url(/static/img/backgroundl.jpg)">
+<header>
+    <a href="/admin/product" class="underline-one">Товары</a>
+    <a href="/admin" class="underline-one">Администратор</a>
+</header>
+<h3>Добавление продавца</h3>
+<form th:method="POST" th:action="@{/admin/product/setproductowner}" th:object="${product_owner}" enctype="multipart/form-data">
+
+    <label for="name">Наименование продавца: </label>
+    <input type="text" th:field="*{name}" id="name">
+    <div class="incorrectFieldForm" style="color: red; background: white" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+
+    <label for="address">Адрес: </label>
+    <input type="text" th:field="*{address}" id="address">
+    <div class="incorrectFieldForm" style="color: red; background: white" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></div>
+
+    <label for="phone">Телефон: </label>
+    <input type="text" th:field="*{phone}" id="phone">
+    <div class="incorrectFieldForm" style="color: red; background: white" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></div>
+
+    <label for="email">E-mail: </label>
+    <input type="text" th:field="*{email}" id="email">
+    <div class="incorrectFieldForm" style="color: red; background: white" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+
+    <label for="typeRegDoc">Тип регистрационного документа: </label>
+    <input type="text" th:field="*{typeRegDoc}" id="typeRegDoc">
+    <div class="incorrectFieldForm" style="color: red; background: white" th:if="${#fields.hasErrors('typeRegDoc')}" th:errors="*{typeRegDoc}"></div>
+
+    <label for="regDoc">Номер и реквизиты регистрационного документа: </label>
+    <input type="text" th:field="*{regDoc}" id="regDoc">
+    <div class="incorrectFieldForm" style="color: red; background: white" th:if="${#fields.hasErrors('regDoc')}" th:errors="*{regDoc}"></div>
+
+    <hr class="hr-vertical-gradient">
+    <div class="keysblock">
+        <input type="submit" value="Добавить" class="key">
+        <a href="/admin/product" class="link">Отмена</a>
+    </div>
+    <p></p>
+</form>
+</body>
+</html>

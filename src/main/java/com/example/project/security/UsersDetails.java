@@ -1,6 +1,6 @@
 package com.example.project.security;
 
-import com.example.project.models.Users;
+import com.example.project.models.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -10,17 +10,16 @@ import java.util.Collection;
 import java.util.Collections;
 
 public class UsersDetails implements UserDetails {
-    private final Users users;
+    private final UserModel users;
 
-    @Autowired
-    public UsersDetails(Users users) {
+    public UsersDetails(UserModel users) {
         this.users = users;
     }
 
     //возвращ. объект пользов-ля после успешной аутентиф.
 
 
-    public Users getUser() {
+    public UserModel getUser() {
         return this.users;
     }
 

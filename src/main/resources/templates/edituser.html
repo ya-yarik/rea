@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/static/styles/styleforadmin.css">
+    <link rel="stylesheet" href="/static/styles/style.css">
     <title>Форма редактирования пользователя</title>
 </head>
 <body style="background-image: url(/static/img/backgroundl.jpg)">
@@ -22,6 +22,14 @@
 
     <p><label for="patron">Отчество: </label></p>
     <input type="text" th:field="*{patronymic}" id="patron">
+    <div style="color: red" th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></div>
+
+    <p><label for="login">Логин: </label></p>
+    <input type="text" th:field="*{login}" id="login">
+    <div style="color: red" th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></div>
+
+    <p><label for="password" hidden>Пароль: </label></p>
+    <input type="hidden" th:field="*{password}" id="password">
 
     <p><label for="years">Возраст: </label></p>
     <!--Проверка поля на стороне фронтенда отключена:
@@ -35,22 +43,32 @@
     <input type="text" th:field="*{email}" id="mail">
     <div class="incorrectFieldForm" style="color: red; background: white" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
 
+    <p><label for="tel">Адрес: </label></p>
+    <input type="text" th:field="*{address}" id="address">
+    <div class="incorrectFieldForm" style="color: red; background: white" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></div>
+
     <p><label for="tel">Телефон: </label></p>
     <input type="text" th:field="*{phone}" id="tel">
     <div class="incorrectFieldForm" style="color: red; background: white" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></div>
 
+    <p><label for="productList" hidden>Продукты: </label></p>
+    <input type="hidden" th:field="*{productList}" id="productList">
+
+    <p><label for="orderList" hidden>Заказы: </label></p>
+    <input type="hidden" th:field="*{orderList}" id="orderList">
+
+    <p><label for="selectGoodProvider">Роль: </label></p>
+    <select id="selectGoodProvider" th:field="*{role}" required>
+        <option th:each="enum : ${T(com.example.project.enumm.Roles).values()}"
+                th:text="${enum.getDisplayValue()}"
+                th:value = "${enum}" >
+        </option>
+    </select>
+
+
     <p><input type="file" name="file" id="file"></p>
 
     <hr class="hr-vertical-gradient">
-    <style>
-        .hr-vertical-gradient {
-            margin: 20px 0;
-            padding: 0;
-            height: 10px;
-            border: none;
-            background: linear-gradient(180deg, orange, blue);
-        }
-    </style>
     <p></p>
     <div class="incorrectFieldForm" style="color: red; font-size: 25px; text-align: center" th:text="${error}"></div>
     <!--  <div th:if="${#fields.hasErrors('global')}">-->

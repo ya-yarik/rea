@@ -1,10 +1,10 @@
-package com.example.project.enumm;
+package com.example.project.enumm.deactivated;
 
 public enum Provider {
-    Арти_партс("Арти Партс"),
-    LadyLux("LadyLux"),
-    OBi("OBi"),
-    Батькин_Резерв("Батькин Резерв");
+    Provider_1("Поставщик 1"),
+    Provider_2("Поставщик 2"),
+    Provider_3("Поставщик 3"),
+    Provider_4("Поставщик 4");
 
     private final String displayValue;
 
