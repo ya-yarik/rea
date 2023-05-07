@@ -3,7 +3,6 @@ package com.example.project.services;
 import com.example.project.models.Category;
 import com.example.project.models.Product;
 import com.example.project.repositories.GoodsRepository;
-import com.example.project.repositories.GoodsRepositorySecond;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,15 +14,10 @@ import java.util.Optional;
 @Transactional(readOnly=true)
 public class GoodsServices {
     private GoodsRepository goodsRepository;
-    private GoodsRepositorySecond goodsRepositorySecond;
 
     @Autowired
     public GoodsServices(GoodsRepository goodsRepository){
         this.goodsRepository=goodsRepository;
-    }
-
-    public GoodsServices(GoodsRepositorySecond goodsRepositorySecond){
-        this.goodsRepositorySecond=goodsRepositorySecond;
     }
 
     public List<Product> getAllProducts(){
@@ -53,7 +47,7 @@ public class GoodsServices {
 
     ////////////
     public List<Product> getProductNameContainingIgnoreCase (String sortSubmit){
-        return goodsRepositorySecond.findByNameContainingIgnoreCase(sortSubmit);
+        return goodsRepository.findByNameContainingIgnoreCase(sortSubmit);
     }
 //    public List<Product> findByProvider(Provider provider){
 //        return goodsRepository.findByProvider(provider);
