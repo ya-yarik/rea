@@ -391,7 +391,7 @@ select[id="selectvalue"]:hover {
     width: 45px;
     height: 45px;
     border-radius: 50%;
-    background-image: url("logo/smile.jpg");
+    background-image: url("/static/logo/smile.jpg");
     cursor: pointer;
 }
 
@@ -399,7 +399,7 @@ select[id="selectvalue"]:hover {
     width: 45px;
     height: 45px;
     border-radius: 50%;
-    background-image: url("logo/smile.jpg");
+    background-image: url("/static/logo/smile.jpg");
     cursor: pointer;
 }
 

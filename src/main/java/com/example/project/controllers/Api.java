@@ -1,5 +1,5 @@
 package com.example.project.controllers;
-import com.example.project.models.Product;
+import com.example.project.models.*;
 import com.example.project.repositories.GoodsRepository;
 import com.example.project.util.ProductErrorResponse;
 import com.example.project.util.ProductNotFoundException;
@@ -25,7 +25,7 @@ public class Api {
         return "Данное API предназначено для получения информации о товарах";
     }
 
-    @GetMapping("/product")
+    @GetMapping("/index")
     public List<Product> getProduct(){
         System.out.println(goodsRepository.findAll());
         return goodsRepository.findAll();
@@ -37,25 +37,24 @@ public class Api {
         return productOptional.orElseThrow(ProductNotFoundException::new);
     }
 
-    @GetMapping("/product/delete/{id}")
+    @GetMapping("/admin/product/delete/{id}")
     public String deleteProductId(@PathVariable("id") int id){
         goodsRepository.deleteById(id);
         return "Товар успешно удален";
     }
 
-    @GetMapping("/product/add")
-    public String addProduct(@RequestParam("name") String name, @RequestParam("price") float price, @RequestParam("weight") float weight, String filePic)
+    @GetMapping("/admin/product/add")
+    public String addProduct (@RequestParam("name") String name, @RequestParam("description") String description, @RequestParam("price") float price, @RequestParam("weight") float weight, Category category, Warehouse warehouse,  ProductOwner productOwner, @RequestParam("producer") String producer, List<ProductPhotos> imageList)
     {
-        Product newProduct = new Product(name, price, weight, filePic);
+        Product newProduct = new Product(name, price, weight, description, warehouse, productOwner, producer, category, imageList);
         goodsRepository.save(newProduct);
         return "Товар успешно добавлен";
     }
 
+
     @ExceptionHandler
     public ResponseEntity<ProductErrorResponse> handlerException(ProductNotFoundException productNotFoundException){
-        ProductErrorResponse response = new ProductErrorResponse(
-                "Не удалось найти товар по данному id"
-        );
+        ProductErrorResponse response = new ProductErrorResponse("Не удалось найти товар по данному id");
         // NOT_FOUND - СТАТУС В ЗАГОЛОВКЕ 404, RESPONSE - ТЕЛО ОТВЕТА
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }

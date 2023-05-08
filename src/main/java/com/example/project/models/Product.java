@@ -58,12 +58,12 @@ public class Product {
     @OneToMany (cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "product")
     private List<ProductPhotos> imageList = new ArrayList<>();
 
-//Устанавливается фотография в Листе для данного продукта
+    //Устанавливается фотография в Листе для данного продукта
     public void addImageToProduct (ProductPhotos image) {
         image.setProduct(this);
         imageList.add(image);
     }
-    
+
     //Данный метод будет заполнять поля даты и времени пр создании объекта класса
     @PrePersist
     private void init(){
@@ -88,7 +88,19 @@ public class Product {
         this.imageList = imageList;
     }
 
-    public Product(int id, String name, float price, float weight, String description, Warehouse warehouse, ProductOwner productOwner, String producer, Category category, String filePic, LocalDateTime dateTime, List<ProductPhotos> imageList) {
+    public Product(String name, float price, float weight, String description, Warehouse warehouse, ProductOwner productOwner, String producer, Category category, List<ProductPhotos> imageList) {
+        this.name = name;
+        this.price = price;
+        this.weight = weight;
+        this.description = description;
+        this.warehouse = warehouse;
+        this.productOwner = productOwner;
+        this.producer = producer;
+        this.category = category;
+        this.imageList = imageList;
+    }
+
+    public Product(int id, String name, float price, float weight, String description, Warehouse warehouse, ProductOwner productOwner, String producer, Category category, String filePic, LocalDateTime dateTime) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -100,7 +112,6 @@ public class Product {
         this.category = category;
         this.filePic = filePic;
         this.dateTime = dateTime;
-        this.imageList = imageList;
     }
 
     public Product(String name, float price, float weight, String filePic) {
@@ -109,6 +120,8 @@ public class Product {
         this.weight = weight;
         this.filePic = filePic;
     }
+
+
 
     public Product() {
 
