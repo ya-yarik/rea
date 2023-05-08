@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<ul><li><p><a href="javascript:flipflop('flipflop_1');">Выберите категорию</a></p>
+  <ul id="flipflop_1" style="display: none"><li th:each="category : ${category}">
+    <option th:text="${category.getId()}+'. '+${category.getName()}" th:value="${category.getName()}"></option>
+  </li></ul></li></ul>
+</body>
+</html>

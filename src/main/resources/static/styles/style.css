@@ -200,6 +200,20 @@ form[class="loginform"] {
     text-align: left;
 }
 
+select[class="field"] {
+    font-size: 20px;
+    height: 36px;
+    width: 98%;
+    align-items: center;
+    text-align: center;
+    border-radius: 3%;
+    background: rgb(140, 207, 166);
+    transition: 1s linear;
+}
+
+select[class="field"]:hover {
+    background: white;
+}
 
 
 button[class="number-plus"] {
@@ -268,9 +282,10 @@ input[type="text"]:hover{
     text-align: left;
 }
 
+
 input[type="text"]:invalid{
     content: '✖';
-    background: rgb(255, 0, 0);
+    background: rgba(255, 0, 115, 0.65);
 }
 input[type="password"]{
     font-size: 20px;

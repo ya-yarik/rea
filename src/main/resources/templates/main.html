@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <link rel="stylesheet" href="/static/styles/style.css">
   <script src="/static/js/furtherDropDown.js"></script>
+  <script src="/static/js/flipFlop.js"></script>
   <title>Список товаров</title>
 </head>
 <body style="background-image: url(/static/img/backgroundl.jpg)">
@@ -48,9 +49,8 @@
 
     <form class="searchForm" th:method="POST" th:action="@{/main}">
       <fieldset>
-        <legend>Выберите параметры для сортировки, поиска, фильтрации:</legend>
-        <label for="search">Поиск по наименованию</label>
-        <input type="text" id="search" name="search" th:value="*{value_search}" required>
+        <legend>Поиск товара</legend>
+        <input class="search" type="text" id="search" name="search" th:value="*{value_search}" placeholder="Название" required>
         <br>
         <p>Цена, P</p>
         <label for="up">От</label>
@@ -59,22 +59,29 @@
         <input type="text" name="to" id="to" th:value="*{value_price_to}">
         <br>
         <br>
-        <div>
-          <input type="radio" id="ascending_price" name="price" value="sorted_by_ascending_price">
+          <input type="radio" id="ascending_price" name="price" value="sorted_by_ascending_price" checked>
           <label for="ascending_price">Отсортировать по возрастанию цены</label>
+          <p></p>
           <input type="radio" id="descending_price" name="price"
                  value="sorted_by_descending_price">
           <label for="descending_price">Отсортировать по убыванию цены</label>
-          <p>Категория товаров: </p>
-          <input type="radio" id="furniture" name="contract" value="furniture">
-          <label for="furniture">Мебель</label>
-          <input type="radio" id="appliances" name="contract" value="appliances">
-          <label for="appliances">Бытовая техника</label>
-          <input type="radio" id="clothes" name="contract" value="clothes">
-          <label for="clothes">Одежда</label>
-          <br>
-          <br>
-          <input type="submit" value="Найти">
+          <p></p>
+          <p>Категория: </p>
+          <p></p>
+<!--          <select class="field" name="category" th:field="*{category}" id="category">-->
+<!--            <div th:each="element : ${category}">-->
+<!--              <option th:text="${element.getName()}" th:value="${element.getId()}">-->
+<!--            </div>-->
+<!--          </select>-->
+<!--          <p></p>-->
+
+          <label>Категории</label>
+          <input type="text" name="category" value="">
+          <p></p>
+
+          <div class="keysblock">
+          <input type="submit" value="Найти" class="key">
+          </div>
         </div>
       </fieldset>
     </form>

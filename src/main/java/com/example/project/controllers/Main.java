@@ -1,6 +1,12 @@
 package com.example.project.controllers;
+import com.example.project.models.Category;
+import com.example.project.repositories.CategoryRepository;
 import com.example.project.repositories.GoodsRepository;
 import com.example.project.services.GoodsServices;
+import org.springframework.beans.*;
+import org.springframework.core.MethodParameter;
+import org.springframework.core.convert.ConversionService;
+import org.springframework.core.convert.TypeDescriptor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,15 +14,23 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.beans.PropertyDescriptor;
+import java.beans.PropertyEditor;
+import java.lang.reflect.Field;
+import java.sql.Wrapper;
+import java.util.Map;
+
 @Controller
 public class Main {
     private final GoodsServices goodsServices;
     private final GoodsRepository goodsRepository;
+    private final CategoryRepository categoryRepository;
 
 
-    public Main(GoodsServices goodsServices, GoodsRepository goodsRepository) {
+    public Main(GoodsServices goodsServices, GoodsRepository goodsRepository, CategoryRepository categoryRepository) {
         this.goodsServices = goodsServices;
         this.goodsRepository = goodsRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     @GetMapping("/index")
@@ -39,38 +53,32 @@ public class Main {
     }
 
     @GetMapping("/main")
-    public String productSearch3(){
+    public String productSearch3(Model model){
+        model.addAttribute("category", categoryRepository.findAll());
         return "main";
     }
 
     @PostMapping("/main")
-    public String productSearch3(@RequestParam("search") String search, @RequestParam("up") String up, @RequestParam("to") String to, @RequestParam(value = "price", required = false, defaultValue = "") String price, @RequestParam(value = "contract", required = false, defaultValue = "")String contract, Model model){
+    public String productSearch3(@RequestParam("search") String search, @RequestParam("up") String up, @RequestParam("to") String to, @RequestParam(value = "price", required = false, defaultValue = "") String price, @RequestParam(value = "category", required = false) String category, Model model){
         model.addAttribute("product", goodsServices.getAllProducts());
+//        Category categoryB = (Category) categoryRepository.findById(category).orElseThrow();
 
         if(!up.isEmpty() & !to.isEmpty()){
             if(!price.isEmpty()){
                 if(price.equals("sorted_by_ascending_price")) {
-                    if (!contract.isEmpty()) {
-                        if (contract.equals("furniture")) {
-                            model.addAttribute("search_product", goodsRepository.findByNameAndCategoryOrderByPriceAsc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to), 1));
-                        } else if (contract.equals("appliances")) {
-                            model.addAttribute("search_product", goodsRepository.findByNameAndCategoryOrderByPriceAsc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to), 3));
-                        } else if (contract.equals("clothes")) {
-                            model.addAttribute("search_product", goodsRepository.findByNameAndCategoryOrderByPriceAsc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to), 2));
-                        }
+                    if (!category.isEmpty()) {
+                        model.addAttribute("category", category);
+                        model.addAttribute("search_product", goodsRepository.findByNameAndCategoryOrderByPriceAsc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to), Integer.parseInt(category)));
                     } else {
                         model.addAttribute("search_product", goodsRepository.findByNameOrderByPriceAsc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to)));
                     }
                 } else if(price.equals("sorted_by_descending_price")){
-                    if(!contract.isEmpty()){
-                        if(contract.equals("furniture")){
-                            model.addAttribute("search_product", goodsRepository.findByNameAndCategoryOrderByPriceDesc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to), 1));
-                        }else if (contract.equals("appliances")) {
-                            model.addAttribute("search_product", goodsRepository.findByNameAndCategoryOrderByPriceDesc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to), 3));
-                        } else if (contract.equals("clothes")) {
-                            model.addAttribute("search_product", goodsRepository.findByNameAndCategoryOrderByPriceDesc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to), 2));
+                    if(!category.isEmpty()){
+                            model.addAttribute("category", category);
+                            model.addAttribute("search_product", goodsRepository.findByNameAndCategoryOrderByPriceDesc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to), Integer.parseInt(category)));
                         }
-                    }  else {
+
+                         else {
                         model.addAttribute("search_product", goodsRepository.findByNameOrderByPriceDesc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to)));
                     }
                 }

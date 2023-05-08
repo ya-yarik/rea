@@ -37,7 +37,7 @@ public interface GoodsRepository extends JpaRepository<Product, Integer> {
     List<Product> findByNameAndCategoryOrderByPriceDesc(String name, float up, float to, int category);
 //
 
-//    List<Product> findByProvider(Provider provider);
+    //    List<Product> findByProvider(Provider provider);
     List<Product> findByNameOrderByPriceAsc (String name);
     List<Product> findByNameOrderByPriceDesc (String name);
 

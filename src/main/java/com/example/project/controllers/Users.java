@@ -299,33 +299,26 @@ public class Users {
     }
 
     @PostMapping("/profile/mainsearch")
-    public String productSearch(@RequestParam("search") String search, @RequestParam("up") String up, @RequestParam("to") String to, @RequestParam(value = "price", required = false, defaultValue = "") String price, @RequestParam(value = "contract", required = false, defaultValue = "")String contract, Model model){
+    public String productSearch(@RequestParam("search") String search, @RequestParam("up") String up, @RequestParam("to") String to, @RequestParam(value = "price", required = false, defaultValue = "") String price, @RequestParam(value = "category", required = false) String category, Model model){
+//        Category categoryB = (Category) categoryRepository.findById(category).orElseThrow();
         model.addAttribute("product", goodsServices.getAllProducts());
 
         if(!up.isEmpty() & !to.isEmpty()){
             if(!price.isEmpty()){
                 if(price.equals("sorted_by_ascending_price")) {
-                    if (!contract.isEmpty()) {
-                        if (contract.equals("furniture")) {
-                            model.addAttribute("search_product", goodsRepository.findByNameAndCategoryOrderByPriceAsc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to), 1));
-                        } else if (contract.equals("appliances")) {
-                            model.addAttribute("search_product", goodsRepository.findByNameAndCategoryOrderByPriceAsc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to), 1));
-                        } else if (contract.equals("clothes")) {
-                            model.addAttribute("search_product", goodsRepository.findByNameAndCategoryOrderByPriceAsc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to), 1));
-                        }
+                    if (!category.isEmpty()) {
+                        model.addAttribute("category", category);
+                        model.addAttribute("search_product", goodsRepository.findByNameAndCategoryOrderByPriceAsc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to), Integer.parseInt(category)));
                     } else {
                         model.addAttribute("search_product", goodsRepository.findByNameOrderByPriceAsc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to)));
                     }
                 } else if(price.equals("sorted_by_descending_price")){
-                    if(!contract.isEmpty()){
-                        if(contract.equals("furniture")){
-                            model.addAttribute("search_product", goodsRepository.findByNameAndCategoryOrderByPriceDesc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to), 1));
-                        }else if (contract.equals("appliances")) {
-                            model.addAttribute("search_product", goodsRepository.findByNameAndCategoryOrderByPriceDesc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to), 1));
-                        } else if (contract.equals("clothes")) {
-                            model.addAttribute("search_product", goodsRepository.findByNameAndCategoryOrderByPriceDesc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to), 1));
-                        }
-                    }  else {
+                    if(!category.isEmpty()){
+                        model.addAttribute("category", category);
+                        model.addAttribute("search_product", goodsRepository.findByNameAndCategoryOrderByPriceDesc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to), Integer.parseInt(category)));
+                    }
+
+                    else {
                         model.addAttribute("search_product", goodsRepository.findByNameOrderByPriceDesc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to)));
                     }
                 }
