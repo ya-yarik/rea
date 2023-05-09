@@ -11,18 +11,19 @@ public class DaoProduct {
     private int id;
     private List<Product> products = new ArrayList<>();
 
-    // Данный метод позволяет добавить объект в лист
+    // метод позволяет добавить объект в лист
     public void addProduct(Product product){
         products.add(product);
         product.setId(++id);
     }
 
-    // Данный метод позволяет получить все товары из ArrayList
+    // метод позволяет получить все товары из ArrayList
     public List<Product> getProducts() {
         return products;
     }
 
-    // Данный метод позволяет получить объект из листа по id
+    // метод позволяет получить объект из листа по id
+
     public Product getProductId(int id){
         //создаём переменную pr и перебираем лист массива  product
         //getId() - метод, получающий id
@@ -37,7 +38,7 @@ public class DaoProduct {
         return products.stream().filter(product -> product.getId() == id).findAny().orElse(null);
     }
 
-    // Данный метод позволяет найти товар по id и заменить поля данного товара на значения, которые придут вместе с объектом формы
+    // метод позволяет найти товар по id и заменить поля данного товара на значения, которые придут вместе с объектом формы
     public void updateProduct(int id, Product product) {
         Product productUpdate = getProductId(id); // получаем редактируемый объект по его id
         productUpdate.setName(product.getName());
@@ -46,8 +47,7 @@ public class DaoProduct {
         productUpdate.setProvider(product.getProvider());
     }
 
-
-    // Данный метод позволяет удалить товар по id
+    // метод позволяет удалить товар по id
     public void deleteProduct(int id){
         products.removeIf(product -> product.getId() == id);
     }

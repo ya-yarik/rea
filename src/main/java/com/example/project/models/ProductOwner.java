@@ -38,10 +38,6 @@ public class ProductOwner {
         return address;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public String getPhone() {
         return phone;
     }
@@ -62,16 +58,8 @@ public class ProductOwner {
         return typeRegDoc;
     }
 
-    public void setTypeRegDoc(String typeRegDoc) {
-        this.typeRegDoc = typeRegDoc;
-    }
-
     public String getRegDoc() {
         return regDoc;
-    }
-
-    public void setRegDoc(String regDoc) {
-        this.regDoc = regDoc;
     }
 
     public List<Product> getProduct() {

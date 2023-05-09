@@ -31,9 +31,11 @@ public class AdminDao {
     public void setUsersBase(List<Users> usersBase) {
         this.usersBase = usersBase;
     }
+
     public Users getUserId(int id){
         return usersBase.stream().filter(user -> user.getId() == id).findAny().orElse(null);
     }
+
     public void userDataUpdate(int id, Users user){
         Users userUpdating=getUserId(id);
         userUpdating.setSurname(user.getSurname());
@@ -43,6 +45,7 @@ public class AdminDao {
         userUpdating.setEmail(user.getEmail());
         userUpdating.setPhone(user.getPhone());
     }
+
     public void userDataDelete(int id){
         usersBase.removeIf(user -> user.getId()==id);
     }

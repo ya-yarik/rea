@@ -11,32 +11,6 @@ header {
     width: 100%;
 }
 
-table {
-    width:100%;
-}
-
-td[id="mainpage"]{
-    width:60%;
-    position: absolute;
-}
-
-td[id="searchBlock"]{
-    width:40%;
-}
-
-table {
-    width:100%;
-}
-
-td[id="mainpageProfile"]{
-    width:60%;
-    position: absolute;
-}
-
-td[id="searchBlockProfile"]{
-    width:40%;
-}
-
 header:hover {
     color: rgb(221, 14, 14); /* Цвет текста */
     background: #f66d52; /* Цвет фона */
@@ -90,6 +64,32 @@ h1 {
     text-align: center;
     color:white;
     opacity: 0.5;
+}
+
+table {
+    width:100%;
+}
+
+td[id="mainpage"]{
+    width:60%;
+    position: absolute;
+}
+
+td[id="searchBlock"]{
+    width:40%;
+}
+
+table {
+    width:100%;
+}
+
+td[id="mainpageProfile"]{
+    width:60%;
+    position: absolute;
+}
+
+td[id="searchBlockProfile"]{
+    width:40%;
 }
 
 #userlist {
@@ -215,6 +215,55 @@ select[class="field"]:hover {
     background: white;
 }
 
+select[id="selectGoodProvider"] {
+    font-size: 20px;
+    height: 36px;
+    width: 98%;
+    align-items: center;
+    text-align: left;
+    background: rgb(140, 207, 166);
+    transition: 1s linear;
+}
+
+select[id="selectGoodProvider"]:hover {
+    background: white;
+    text-align: left;
+}
+
+select[id="selectGoodProvider"]:invalid {
+    content: '✖';
+    background: rgb(255, 0, 0);
+}
+
+select[id="sortUser"] {
+    font-size: 20px;
+    height: 36px;
+    width: 98%;
+    align-items: center;
+    text-align: left;
+    background: rgb(140, 207, 166);
+    transition: 1s linear;
+}
+
+select[id="sortUser"]:hover {
+    background: white;
+    text-align: left;
+}
+
+select[id="sortOrder"] {
+    font-size: 20px;
+    height: 36px;
+    width: 98%;
+    align-items: center;
+    text-align: left;
+    background: rgb(140, 207, 166);
+    transition: 1s linear;
+}
+
+select[id="sortOrder"]:hover {
+    background: white;
+    text-align: left;
+}
 
 button[class="number-plus"] {
     border-radius: 100%;
@@ -330,8 +379,6 @@ input[type="email"]:invalid {
 }
 
 input[type="radio"] {
-    height: 30px;
-    width: 15px;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -425,6 +472,7 @@ output[type="number"] {
     height: auto;
     cursor: pointer;
 }
+
 .key{
     border: 5px solid #0caa0c;
     border-radius: 50px;
@@ -520,57 +568,6 @@ output[type="number"] {
     /*border: 1px solid fuchsia;*/
 }
 
-select[id="selectGoodProvider"] {
-    font-size: 20px;
-    height: 36px;
-    width: 98%;
-    align-items: center;
-    text-align: left;
-    background: rgb(140, 207, 166);
-    transition: 1s linear;
-}
-
-select[id="selectGoodProvider"]:hover {
-    background: white;
-    text-align: left;
-}
-
-select[id="selectGoodProvider"]:invalid {
-    content: '✖';
-    background: rgb(255, 0, 0);
-}
-
-select[id="sortUser"] {
-    font-size: 20px;
-    height: 36px;
-    width: 98%;
-    align-items: center;
-    text-align: left;
-    background: rgb(140, 207, 166);
-    transition: 1s linear;
-}
-
-select[id="sortUser"]:hover {
-    background: white;
-    text-align: left;
-}
-
-select[id="sortOrder"] {
-    font-size: 20px;
-    height: 36px;
-    width: 98%;
-    align-items: center;
-    text-align: left;
-    background: rgb(140, 207, 166);
-    transition: 1s linear;
-}
-
-select[id="sortOrder"]:hover {
-    background: white;
-    text-align: left;
-}
-
-/**/
 .dropbtn {
     background-color: #3498DB;
     /*color: white;

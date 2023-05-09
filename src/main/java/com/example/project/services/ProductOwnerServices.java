@@ -2,7 +2,6 @@ package com.example.project.services;
 
 import com.example.project.models.ProductOwner;
 import com.example.project.repositories.ProductOwnerRepository;
-import com.example.project.repositories.WarehouseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +29,7 @@ public class ProductOwnerServices {
         public void deleteProductOwner(int id){
             productOwnerRepository.deleteById(id);
         }
+
         @Transactional
         public ProductOwner getProductOwnerId(int id){
             Optional<ProductOwner> thatProductOwner = productOwnerRepository.findById(id);

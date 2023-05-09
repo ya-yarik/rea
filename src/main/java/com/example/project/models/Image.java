@@ -36,10 +36,6 @@ public class Image {
         return fileName;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
     public Product getProduct() {
         return product;
     }

@@ -1,8 +1,6 @@
 package com.example.project.services;
 
 import com.example.project.models.Orders;
-import com.example.project.models.Product;
-import com.example.project.models.UserModel;
 import com.example.project.repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +22,7 @@ public class OrdersServices {
     public List<Orders> allOrders(){
         return orderRepository.findAll();
     }
+
     public Orders aboutOrders (int id){
         Optional<Orders> order = orderRepository.findById(id);
         return order.orElse(null);

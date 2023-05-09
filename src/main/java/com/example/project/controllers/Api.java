@@ -6,7 +6,6 @@ import com.example.project.util.ProductNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +21,7 @@ public class Api {
 
     @GetMapping("/info")
     public String getInfoApi(){
-        return "Данное API предназначено для получения информации о товарах";
+        return "Информация о товарах магазина (API)";
     }
 
     @GetMapping("/index")
@@ -40,15 +39,15 @@ public class Api {
     @GetMapping("/admin/product/delete/{id}")
     public String deleteProductId(@PathVariable("id") int id){
         goodsRepository.deleteById(id);
-        return "Товар успешно удален";
+        return "Товар удалён";
     }
 
     @GetMapping("/admin/product/add")
-    public String addProduct (@RequestParam("name") String name, @RequestParam("description") String description, @RequestParam("price") float price, @RequestParam("weight") float weight, Category category, Warehouse warehouse,  ProductOwner productOwner, @RequestParam("producer") String producer, List<ProductPhotos> imageList)
-    {
+    public String addProduct (@RequestParam("name") String name, @RequestParam("description") String description, @RequestParam("price") float price, @RequestParam("weight") float weight, Category category, Warehouse warehouse,  ProductOwner productOwner, @RequestParam("producer") String producer, List<ProductPhotos> imageList){
+
         Product newProduct = new Product(name, price, weight, description, warehouse, productOwner, producer, category, imageList);
         goodsRepository.save(newProduct);
-        return "Товар успешно добавлен";
+        return "Товар добавлен";
     }
 
 

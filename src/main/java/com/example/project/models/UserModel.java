@@ -6,10 +6,6 @@ import jakarta.validation.constraints.Email;
 
 import java.util.List;
 import java.util.Objects;
-
-
-//@Entity
-//@Table(name = "shop_users")
 @Entity(name = "shop_users")
 public class UserModel {
     @Id
@@ -31,23 +27,22 @@ public class UserModel {
 
     //    @NotEmpty(message = "Поле 'Фамилия' не может быть пустым")
     @Size(min=2, max=30, message="Фамилия должна быть в диапазоне от 2 до 30 символов")
-//    @Column (name = "surname", length = 30, nullable=false, columnDefinition = "text")
+    //    @Column (name = "surname", length = 30, nullable=false, columnDefinition = "text")
     @Column (name = "surname", length = 30, nullable=true, columnDefinition = "text")
     private String surname;
 
     //    @NotEmpty(message = "Поле 'Имя' не может быть пустым")
     @Size(min=2, max=30, message="Имя должно быть в диапазоне от 2 до 30 символов")
-//    @Column (name = "name", length = 30, nullable=false, columnDefinition = "text")
+    //    @Column (name = "name", length = 30, nullable=false, columnDefinition = "text")
     @Column (name = "name", length = 30, nullable=true, columnDefinition = "text")
     private String name;
-
 
     @Column (name = "patronymic", length = 30, columnDefinition = "text")
     private String patronymic;
 
     @Min(value=0, message="Возраст не может быть отрицательным. Вы ещё не родились?")
     @Max(value=123, message="Жанна Кальман — французская сверхдолгожительница, старейшая из когда-либо живших на Земле людей, прожила 123 года. Если вам действительно больше, пожалуйста, обратитесь в 'Guinness Book of Records' и к администратору нашего сайта, прикрепив скан удостоверения личности")
-//  @Column (name = "age", length = 3, nullable=false, columnDefinition="int")
+    //  @Column (name = "age", length = 3, nullable=false, columnDefinition="int")
     @Column (name = "age", length = 3, nullable=true, columnDefinition="int")
     private int age;
 
@@ -93,10 +88,6 @@ public class UserModel {
         return address;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public int getId() {
         return id;
     }
@@ -107,10 +98,6 @@ public class UserModel {
 
     public String getLogin() {
         return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
     }
 
     public String getPassword() {
@@ -133,10 +120,6 @@ public class UserModel {
         return surname;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
     public String getName() {
         return name;
     }
@@ -149,16 +132,8 @@ public class UserModel {
         return patronymic;
     }
 
-    public void setPatronymic(String patronymic) {
-        this.patronymic = patronymic;
-    }
-
     public int getAge() {
         return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
     }
 
     public String getEmail() {
@@ -183,10 +158,6 @@ public class UserModel {
 
     public void setFilePic(String filePic) {
         this.filePic = filePic;
-    }
-
-    public List<Product> getProductList() {
-        return productList;
     }
 
     public void setProductList(List<Product> productList) {

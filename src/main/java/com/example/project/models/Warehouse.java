@@ -37,10 +37,6 @@ public class Warehouse {
         return address;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public String getPhone() {
         return phone;
     }
@@ -59,10 +55,6 @@ public class Warehouse {
 
     public String getMainPerson() {
         return mainPerson;
-    }
-
-    public void setMainPerson(String mainPerson) {
-        this.mainPerson = mainPerson;
     }
 
     public List<Product> getProduct() {

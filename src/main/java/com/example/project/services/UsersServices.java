@@ -12,13 +12,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-//@Transactional(readOnly=true)
 public class UsersServices {
     private final UsersRepository usersRepository;
     private final PasswordEncoder passwordEncoder;
 
     //хеширование пароля - включение энкодера
-
     @Autowired
     public UsersServices(UsersRepository usersRepository, PasswordEncoder passwordEncoder){
         this.usersRepository=usersRepository;
@@ -37,7 +35,6 @@ public class UsersServices {
         usersRepository.save(users);
     }
 
-    ////
     public List<UserModel> getAllUser(){
         return usersRepository.findAll();
     }
@@ -56,16 +53,12 @@ public class UsersServices {
         user.setId(id);
         usersRepository.save(user);
     }
-    @Transactional
-    public void editUserUser(UserModel user){
-        usersRepository.save(user);
-    }
 
     @Transactional
     public void deleteUser(int id){
         usersRepository.deleteById(id);
     }
-    ////////////
+
     public List<UserModel> getUserEmail(String email){
         return usersRepository.findByEmail(email);
     }
@@ -89,16 +82,4 @@ public class UsersServices {
         user.setId(id);
         usersRepository.save(user);
     }
-
-//    @Transactional
-//    public void changeRole(int id, UserModel user){
-//        user.setId(id);
-//        user.setRole("ROLE_ADMIN");
-//        usersRepository.save(user);
-//    }
-//    @Transactional
-//    public void changeRoleBack(int id, UserModel user){
-//        user.setId(id);
-//        user.setRole("ROLE_USER");
-//    }
 }

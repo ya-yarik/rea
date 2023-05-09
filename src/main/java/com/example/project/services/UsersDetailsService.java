@@ -20,7 +20,8 @@ public class UsersDetailsService implements UserDetailsService {
     public UsersDetailsService(UsersRepository usersRepository) {
         this.usersRepository = usersRepository;
     }
-//находит пользователя по юзернэйму
+
+    //находит пользователя по юзернэйму
     @Override
     public UserDetails loadUserByUsername(String username)  throws UsernameNotFoundException {
         // Получаем пользователя из таблицы по логину с формы аутентификации

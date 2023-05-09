@@ -1,8 +1,6 @@
 package com.example.project.services;
 
 import com.example.project.models.Category;
-import com.example.project.models.Product;
-import com.example.project.models.UserModel;
 import com.example.project.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +29,7 @@ public class CategoryServices {
     public void deleteCategory(int id){
         categoryRepository.deleteById(id);
     }
+
     @Transactional
     public Category getCategoryId(int id){
         Optional<Category> thatCategory = categoryRepository.findById(id);

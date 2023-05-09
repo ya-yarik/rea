@@ -3,9 +3,7 @@ package com.example.project.repositories;
 import com.example.project.models.Orders;
 import com.example.project.models.UserModel;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-
 import java.util.List;
 
 @Repository
