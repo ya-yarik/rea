@@ -95,4 +95,25 @@ public class Main {
         return "main";
     }
 
+//    @GetMapping("/experiment")
+//    public String productSearch4(Model model){
+//        model.addAttribute("category", categoryRepository.findAll());
+//        return "experiment";
+//    }
+
+    @GetMapping("/experiment")
+    public String productSearch4(Model model){
+        model.addAttribute("category", categoryRepository.findAll());
+        return "experiment";
+    }
+
+    @PostMapping("/experiment")
+    public String productSearch4(@RequestParam("search") String search, @RequestParam(value = "categories", required = false) Integer category, Model model){
+//        Category category = (Category) categoryRepository.findById(categories).orElseThrow();
+        model.addAttribute("category", categoryRepository.findAll());
+//        model.addAttribute("search_product", goodsServices.getByNameAndCategory(search.toLowerCase(), category));
+        model.addAttribute("search_product", goodsServices.getByNameAndCategory(search.toLowerCase(), category));
+        return "experiment";
+    }
+
 }

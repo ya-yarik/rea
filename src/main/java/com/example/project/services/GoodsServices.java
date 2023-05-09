@@ -49,6 +49,15 @@ public class GoodsServices {
     public List<Product> getProductNameContainingIgnoreCase (String sortSubmit){
         return goodsRepository.findByNameContainingIgnoreCase(sortSubmit);
     }
+
+//    public List<Product> getByNameAndCategory (String search, Category category){
+//        return goodsRepository.findByNameAndCategory(search, category);
+//    }
+
+    public List<Product> getByNameAndCategory (String search, Integer category){
+        return goodsRepository.findByNameAndCategory(search, category);
+    }
+
 //    public List<Product> findByProvider(Provider provider){
 //        return goodsRepository.findByProvider(provider);
 //    }

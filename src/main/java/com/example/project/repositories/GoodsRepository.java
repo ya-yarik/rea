@@ -1,4 +1,5 @@
 package com.example.project.repositories;
+import com.example.project.models.Category;
 import com.example.project.models.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -30,14 +31,15 @@ public interface GoodsRepository extends JpaRepository<Product, Integer> {
 
     // Поиск по наименованию и фильтрация по диапазону цены, сортировка по возрастанию цены,  а также фильтрация по категории
     @Query(value = "select * from shop_products where category_id = ?4 and(lower(name) LIKE %?1%) or (lower(name) LIKE '?1%') OR (lower(name) LIKE '%?1') and (price >= ?2 and price <= ?3) order by price",nativeQuery = true)
-    List<Product> findByNameAndCategoryOrderByPriceAsc(String name, float up, float to, int category);
+    List<Product> findByNameAndCategoryOrderByPriceAsc(String name, float up, float to, Integer category);
 
     // Поиск по наименованию и фильтрация по диапазону цены, сортировка по убыванию цены,  а также фильтрация по категории
     @Query(value = "select * from shop_products where category_id = ?4 and(lower(name) LIKE %?1%) or (lower(name) LIKE '?1%') OR (lower(name) LIKE '%?1') and (price >= ?2 and price <= ?3) order by price desc",nativeQuery = true)
     List<Product> findByNameAndCategoryOrderByPriceDesc(String name, float up, float to, int category);
 //
 
-    //    List<Product> findByProvider(Provider provider);
+//    List<Product> findByNameAndCategory (String name, Category category);
+    List<Product> findByNameAndCategory (String name, Integer category);
     List<Product> findByNameOrderByPriceAsc (String name);
     List<Product> findByNameOrderByPriceDesc (String name);
 
