@@ -18,14 +18,21 @@
 
         <legend>Поиск товара</legend>
 
-        <input class="search" type="text" id="search" name="search" th:value="*{search}" placeholder="Название" required>
+        <input class="search" type="text" id="search" name="search" th:value="*{value_search}" placeholder="Название" required>
 
         <p></p>
-        <p>Категория: </p>
-                  <select class="field" name="category" th:field="*{category}" id="category">
-                    <option th:each="categories : ${category}" th:text="${categories.getName()}" th:value="${categories.getId()}"></option>
-                  </select>
-                  <p></p>
+
+        <ul>
+          <li th:each="categories : ${category}">
+            <input type="radio" th:field="*{category}" th:value="${categories.getId()}"/>
+          </li>
+        </ul>
+
+<!--        <p>Категория: </p>-->
+<!--                  <select class="field" name="categories" th:field="*{category}" id="categories">-->
+<!--                    <option th:each="categories : ${category}" th:text="${categories.getName()}" th:value="${categories.getId()}"></option>-->
+<!--                  </select>-->
+<!--                  <p></p>-->
 
         <div class="keysblock">
           <input type="submit" value="Найти" class="key">
@@ -33,19 +40,14 @@
 
       </fieldset>
     </form>
-
-    <form>
-      <p></p>
-      <div th:each="product : ${search_product}">
-        <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="95%" height="71%">
-        <br>
-        <a th:href="@{/product/{id}(id=${product.getId()})}" th:text="${product.getName()}"></a>
-        <p th:text="'Цена: ' + ${product.getPrice()}"></p>
-        <a class="key" th:href="@{/profile/cart/add/{id}(id=${product.getId()})}">Купить</a>
-        <p></p>
-        <hr class="hr-vertical-gradient">
-      </div>
-      <p></p>
-    </form>
+<form th:each="product : ${search_product}">
+  <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="95%" height="71%">
+  <br>
+  <a th:href="@{/product/{id}(id=${product.getId()})}" th:text="${product.getName()}"></a>
+  <p th:text="'Цена: ' + ${product.getPrice()}"></p>
+  <a class="key" th:href="@{/profile/cart/add/{id}(id=${product.getId()})}">Купить</a>
+  <p></p>
+  <hr class="hr-vertical-gradient">
+</form>
 </body>
 </html>

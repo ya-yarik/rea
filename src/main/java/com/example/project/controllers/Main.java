@@ -15,7 +15,6 @@ public class Main {
     private final GoodsRepository goodsRepository;
     private final CategoryRepository categoryRepository;
 
-
     public Main(GoodsServices goodsServices, GoodsRepository goodsRepository, CategoryRepository categoryRepository) {
         this.goodsServices = goodsServices;
         this.goodsRepository = goodsRepository;
@@ -109,11 +108,15 @@ public class Main {
     }
 
     @PostMapping("/experiment")
-    public String productSearch4(@RequestParam("search") String search, @RequestParam(value = "categories", required = false) Integer category, Model model){
+    public String productSearch4(@RequestParam("search") String search, @RequestParam(value = "categories", required = false) String categories, Model model){
+        model.addAttribute("value_search", search);
+        //model.addAttribute("product", goodsServices.getAllProducts());
 //        Category category = (Category) categoryRepository.findById(categories).orElseThrow();
-        model.addAttribute("category", categoryRepository.findAll());
+//        model.addAttribute("category", categoryRepository.findAll());
 //        model.addAttribute("search_product", goodsServices.getByNameAndCategory(search.toLowerCase(), category));
-        model.addAttribute("search_product", goodsServices.getByNameAndCategory(search.toLowerCase(), category));
+        model.addAttribute("category", categoryRepository.findAll());
+//        model.addAttribute("categories", categoryServices.getCategoryId(categories));
+        model.addAttribute("search_product", goodsRepository.findByNameAndCategory(search.toLowerCase(), Integer.parseInt(categories)));
         return "experiment";
     }
 }
