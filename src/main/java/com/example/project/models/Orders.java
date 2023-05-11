@@ -55,6 +55,10 @@ public class Orders {
         return number;
     }
 
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
     public Product getProduct() {
         return product;
     }
@@ -75,6 +79,10 @@ public class Orders {
         return count;
     }
 
+    public void setCount(int count) {
+        this.count = count;
+    }
+
     public float getPrice() {
         return price;
     }
@@ -87,8 +95,15 @@ public class Orders {
         return dateTime;
     }
 
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
+    }
+
     public Statuses getStatuses() {
         return statuses;
     }
 
+    public void setStatuses(Statuses statuses) {
+        this.statuses = statuses;
+    }
 }

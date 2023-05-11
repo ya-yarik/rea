@@ -34,7 +34,7 @@ public interface GoodsRepository extends JpaRepository<Product, Integer> {
 
     List<Product> findByNameAndCategoryOrderByPriceDesc(String name, float up, float to, int category);
     @Query(value = "select * from shop_products where category_id = ?1 and name= ?2",nativeQuery = true)
-    List<Product> findByNameAndCategory (String name, int categories);
+    List<Product> findByNameAndCategory (String name, int category);
     List<Product> findByNameOrderByPriceAsc (String name);
     List<Product> findByNameOrderByPriceDesc (String name);
 

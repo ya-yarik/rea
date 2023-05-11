@@ -32,10 +32,8 @@ public class GoodsServices {
     }
 
     @Transactional
-    public void newProduct (Product product, Category category, Warehouse warehouse, ProductOwner productOwner){
+    public void newProduct (Product product, Category category){
         product.setCategory(category);
-        product.setWarehouse(warehouse);
-        product.setProductOwner(productOwner);
         goodsRepository.save(product);
     }
 

@@ -59,11 +59,9 @@ public class Main {
             if(!price.isEmpty()){
                 if(price.equals("sorted_by_ascending_price")) {
                     if (!category.isEmpty()) {
-
-                        model.addAttribute("category", category);
-                        model.addAttribute("search_product", goodsRepository.findByNameAndCategoryOrderByPriceAsc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to), Integer.parseInt(category)));
+                            model.addAttribute("category", category);
+                            model.addAttribute("search_product", goodsRepository.findByNameAndCategoryOrderByPriceAsc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to), Integer.parseInt(category)));
                     }
-
                     else {
 
                         model.addAttribute("search_product", goodsRepository.findByNameOrderByPriceAsc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to)));
@@ -71,11 +69,10 @@ public class Main {
                 }
 
                 else if(price.equals("sorted_by_descending_price")){
-                    if(!category.isEmpty()){
-
+                    if(!category.isEmpty()) {
                             model.addAttribute("category", category);
                             model.addAttribute("search_product", goodsRepository.findByNameAndCategoryOrderByPriceDesc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to), Integer.parseInt(category)));
-                        }
+                    }
 
                     else {
 
@@ -98,7 +95,7 @@ public class Main {
         model.addAttribute("value_search", search);
         model.addAttribute("value_price_up", up);
         model.addAttribute("value_price_to", to);
-        return "main";
+        return "mainresult";
     }
 
     @GetMapping("/experiment")
@@ -108,15 +105,15 @@ public class Main {
     }
 
     @PostMapping("/experiment")
-    public String productSearch4(@RequestParam("search") String search, @RequestParam(value = "categories", required = false) String categories, Model model){
+    public String productSearch4(@RequestParam("search") String search, @RequestParam(value = "category", required = false) String category, Model model){
         model.addAttribute("value_search", search);
         //model.addAttribute("product", goodsServices.getAllProducts());
 //        Category category = (Category) categoryRepository.findById(categories).orElseThrow();
 //        model.addAttribute("category", categoryRepository.findAll());
 //        model.addAttribute("search_product", goodsServices.getByNameAndCategory(search.toLowerCase(), category));
-        model.addAttribute("category", categoryRepository.findAll());
+        model.addAttribute("category", category);
 //        model.addAttribute("categories", categoryServices.getCategoryId(categories));
-        model.addAttribute("search_product", goodsRepository.findByNameAndCategory(search.toLowerCase(), Integer.parseInt(categories)));
+        model.addAttribute("search_product", goodsRepository.findByNameAndCategory(search.toLowerCase(), Integer.parseInt(category)));
         return "experiment";
     }
 }

@@ -69,4 +69,16 @@ public class ProductOwner {
     public void setProduct(List<Product> product) {
         this.product = product;
     }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setTypeRegDoc(String typeRegDoc) {
+        this.typeRegDoc = typeRegDoc;
+    }
+
+    public void setRegDoc(String regDoc) {
+        this.regDoc = regDoc;
+    }
 }

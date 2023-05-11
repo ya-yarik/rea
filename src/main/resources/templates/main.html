@@ -68,17 +68,31 @@
           <label for="descending_price">Отсортировать по убыванию цены</label>
           <p></p>
           <p>Категория: </p>
-          <p></p>
+
+        <ul><li><p><a href="javascript:flipFlop('flipFlop_2');">Выберите категорию</a></p>
+          <ul id="flipFlop_2" style="display: none"><li th:each="category : ${category}">
+            <option th:text="${category.toString()}" th:value="${category.toString()}"></option>
+          </li></ul></li></ul>
+
+<!--        <ul>-->
+<!--          <li th:each="category : ${category}">-->
+<!--            <input type="radio" th:field="*{category}" th:value="${category.toString()}" th:text="${category.toString()}"/>-->
+<!--          </li>-->
+<!--        </ul>-->
+
+<!--          <p></p>-->
 
 <!--          <select class="field" name="category" th:field="*{category}" id="category">-->
-<!--            <div th:each="element : ${category}">-->
-<!--              <option th:text="${element.getName()}" th:value="${element.getId()}">-->
+<!--            <div th:each="category : ${category}">-->
+<!--              <option th:text="${category.toString()}" th:value="${category.toString()}">-->
 <!--            </div>-->
 <!--          </select>-->
 <!--          <p></p>-->
 
-          <label>Категории</label>
-          <input type="number" name="category" value="">
+          <label>Введите в поле ниже<br>
+            порядковый номер выбранной категории</label>
+
+        <input type="number" name="category" value="" min="1">
           <p></p>
 
           <div class="keysblock">

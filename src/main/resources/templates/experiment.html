@@ -23,10 +23,15 @@
         <p></p>
 
         <ul>
-          <li th:each="categories : ${category}">
-            <input type="radio" th:field="*{category}" th:value="${categories.getId()}"/>
+          <li th:each="category : ${category}">
+            <input type="radio" th:field="*{category}" th:value="${category}" th:text="${category}"/>
           </li>
         </ul>
+
+        <ul><li><p><a href="javascript:flipFlop('flipFlop_2');">Выберите категорию</a></p>
+          <ul id="flipFlop_2" style="display: none"><li th:each="category : ${category}">
+            <option th:text="${category.toString()}" th:value="${category.toString()}"></option>
+          </li></ul></li></ul>
 
 <!--        <p>Категория: </p>-->
 <!--                  <select class="field" name="categories" th:field="*{category}" id="categories">-->

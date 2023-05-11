@@ -9,8 +9,21 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    public int getPersonId() {
+        return personId;
+    }
+
+    public void setPersonId(int personId) {
+        this.personId = personId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
+
     private String name;
     private float price;
+    private float weight;
 
     @Column(name = "person_id")
     private int personId;
@@ -52,5 +65,13 @@ public class Cart {
 
     public void setPrice(float price) {
         this.price = price;
+    }
+
+    public float getWeight() {
+        return weight;
+    }
+
+    public void setWeight(float weight) {
+        this.weight = weight;
     }
 }

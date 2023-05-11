@@ -21,7 +21,7 @@
   <hr class="hr-vertical-gradient">
   <p style="font-size: 24px" th:text="'Итоговая цена: ' + ${price}"></p>
   <div class="keysblock">
-    <a href="/profile/order/create" class="underline-one">Оформить заказ</a>
+    <a href="/profile/order/create" class="link">Оформить заказ</a>
     <a th:href="@{/profile/product/{id}(id=${product.getId()})}" class="link">Вернуться в описание</a>
   <a th:href="@{/profile/cart/delete/{id}(id=${product.getId()})}" class="link">Удалить из корзины</a>
   <a href="/profile" class="link">Отмена</a>

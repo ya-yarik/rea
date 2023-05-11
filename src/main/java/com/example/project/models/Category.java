@@ -38,4 +38,9 @@ public class Category {
     public void setProduct(List<Product> product) {
         this.product = product;
     }
+
+    @Override
+    public String toString() {
+        return id+". "+name;
+    }
 }

@@ -64,4 +64,12 @@ public class Warehouse {
     public void setProduct(List<Product> product) {
         this.product = product;
     }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setMainPerson(String mainPerson) {
+        this.mainPerson = mainPerson;
+    }
 }

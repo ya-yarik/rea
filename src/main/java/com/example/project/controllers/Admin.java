@@ -275,7 +275,7 @@ public class Admin {
             }
         }
 
-        goodsServices.newProduct(product, category_db, warehouse_db, productowner_db);
+        goodsServices.newProduct(product, category_db);
         return "redirect:/admin/product";
     }
 

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "shop_products")
+//@Entity
 public class Product {
 
     @Id
@@ -57,13 +58,13 @@ public class Product {
     @OneToMany (cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "product")
     private List<ProductPhotos> imageList = new ArrayList<>();
 
-    //Устанавливается фотография для данного продукта в лист
+    //Устанавливается фотография в Листе для данного продукта
     public void addImageToProduct (ProductPhotos image) {
         image.setProduct(this);
         imageList.add(image);
     }
 
-    //Метод будет заполнять поля даты и времени при создании объекта класса
+    //Данный метод будет заполнять поля даты и времени пр создании объекта класса
     @PrePersist
     private void init(){
         dateTime = LocalDateTime.now();
@@ -99,7 +100,7 @@ public class Product {
         this.imageList = imageList;
     }
 
-    public Product(int id, String name, float price, float weight, String description, Warehouse warehouse, ProductOwner productOwner, String producer, Category category, String filePic, LocalDateTime dateTime) {
+    public Product(int id, String name, float price, float weight, String description, Warehouse warehouse, ProductOwner productOwner, String producer, Category category, String filePic, LocalDateTime dateTime, List<ProductPhotos> imageList) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -111,6 +112,7 @@ public class Product {
         this.category = category;
         this.filePic = filePic;
         this.dateTime = dateTime;
+        this.imageList = imageList;
     }
 
     public Product(String name, float price, float weight, String filePic) {
@@ -129,6 +131,7 @@ public class Product {
     }
 
     public void setId(int id) {
+//        this.id = ++id;
         this.id = id;
     }
 
@@ -158,6 +161,22 @@ public class Product {
         this.weight = b/100;
     }
 
+    public String getFilePic() {
+        return filePic;
+    }
+
+    public void setFilePic(String filePic) {
+        this.filePic = filePic;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public Warehouse getWarehouse() {
         return warehouse;
     }
@@ -174,6 +193,14 @@ public class Product {
         this.productOwner = productOwner;
     }
 
+    public String getProducer() {
+        return producer;
+    }
+
+    public void setProducer(String producer) {
+        this.producer = producer;
+    }
+
     public Category getCategory() {
         return category;
     }
@@ -182,12 +209,36 @@ public class Product {
         this.category = category;
     }
 
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
+    }
+
     public List<ProductPhotos> getImageList() {
         return imageList;
     }
 
     public void setImageList(List<ProductPhotos> imageList) {
         this.imageList = imageList;
+    }
+
+    public List<UserModel> getPersonList() {
+        return personList;
+    }
+
+    public void setPersonList(List<UserModel> personList) {
+        this.personList = personList;
+    }
+
+    public List<Orders> getOrderList() {
+        return orderList;
+    }
+
+    public void setOrderList(List<Orders> orderList) {
+        this.orderList = orderList;
     }
 
     @Override

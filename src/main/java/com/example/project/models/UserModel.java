@@ -160,6 +160,10 @@ public class UserModel {
         this.filePic = filePic;
     }
 
+    public List<Product> getProductList() {
+        return productList;
+    }
+
     public void setProductList(List<Product> productList) {
         this.productList = productList;
     }
@@ -170,6 +174,26 @@ public class UserModel {
 
     public void setOrderList(List<Orders> orderList) {
         this.orderList = orderList;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public void setPatronymic(String patronymic) {
+        this.patronymic = patronymic;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     @Override
