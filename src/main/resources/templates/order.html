@@ -11,7 +11,7 @@
     <a href="/admin" class="underline-one">Администратор</a>
     <a href="/admin/orders" class="underline-one">Заказы</a>
 </header>
-<h1>Заказ</h1>
+<h1 th:text="'Заказ № '+${order.getNumber()}"></h1>
 <div class="staticform">
     <p><u><b>Время заказа: </b></u><nobr th:text="' '+${order.getDateTime()}"></nobr></p>
     <p><u><b>Статус: </b></u><nobr th:text="' '+${order.getStatuses()}"></nobr></p>

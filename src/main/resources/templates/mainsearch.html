@@ -5,11 +5,12 @@
     <link href="/static/logo/reu.png" rel="shortcut icon">
     <link rel="stylesheet" href="/static/styles/style.css">
     <script src="/static/js/furtherDropDown.js"></script>
-    <title>Мой профиль</title>
+    <script src="/static/js/flipFlop.js"></script>
+    <title>Расширенный поиск товаров</title>
 </head>
 <body style="background-image: url(/static/img/backgroundl.jpg)">
 <header>
-
+    <a href="/profile" class="orders">Мой профиль</a>
     <div class="dropdown">
         <button onclick="furtherDropDownI()" class="dropbtn">О нас</button>
         <div id="myDropdown_13" class="dropdown-content">
@@ -38,11 +39,11 @@
 
 </header>
 <p></p>
-<h1>Список товаров</h1>
+<h1>Расширенный поиск товаров</h1>
 <table>
     <tr><td id="searchBlock">
 
-        <form class="searchForm" th:method="POST" th:action="@{/profile/mainsearch}">
+        <form class="staticFormFixed" th:method="POST" th:action="@{/profile/mainsearch}">
             <fieldset>
                 <legend>Поиск товара</legend>
                 <input class="search" type="text" id="search" name="search" th:value="*{value_search}" placeholder="Название" required>
@@ -54,27 +55,29 @@
                 <input type="number" name="to" id="to" th:value="*{value_price_to}">
                 <br>
                 <br>
-                <div>
-                    <input type="radio" id="ascending_price" name="price" value="sorted_by_ascending_price" checked>
-                    <label for="ascending_price">Отсортировать по возрастанию цены</label>
-                    <p></p>
-                    <input type="radio" id="descending_price" name="price"
-                           value="sorted_by_descending_price">
-                    <label for="descending_price">Отсортировать по убыванию цены</label>
-                    <p></p>
-                    <p>Категория: </p>
-                    <p></p>
-                    <!--          <select class="field" name="category" th:field="*{category}" id="category">-->
-                    <!--            <div th:each="element : ${category}">-->
-                    <!--              <option th:text="${element.getName()}" th:value="${element.getId()}">-->
-                    <!--            </div>-->
-                    <!--          </select>-->
-                    <!--          <p></p>-->
-                    <input type="text" name="category" value="">
-                    <p></p>
-                    <div class="keysblock">
-                        <input type="submit" value="Найти" class="key">
-                    </div>
+                <input type="radio" id="ascending_price" name="price" value="sorted_by_ascending_price">
+                <label for="ascending_price">Отсортировать по возрастанию цены</label>
+                <p></p>
+                <input type="radio" id="descending_price" name="price"
+                       value="sorted_by_descending_price">
+                <label for="descending_price">Отсортировать по убыванию цены</label>
+                <p></p>
+                <p>Поиск по категории: </p>
+
+
+                <ul><li><p><a href="javascript:flipFlop_5('flipFlop_5');">Выберите категорию</a></p>
+                        <ul id="flipFlop_5" style="display: none"><li th:each="categories : ${category}">
+                            <option th:text="${categories.toString()}" th:value="${categories.toString()}"></option>
+                        </li></ul></li></ul>
+
+                    <label>Введите в поле ниже<br>
+                        порядковый номер выбранной категории</label>
+
+                <input type="number" name="categoriest" value="" min="1" id="categoriest">
+                <p></p>
+
+                <div class="keysblock">
+                    <input type="submit" value="Найти" class="key">
                 </div>
             </fieldset>
         </form>
@@ -87,7 +90,7 @@
                 <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="95%" height="71%">
                 <br>
                 <a th:href="@{/product/{id}(id=${product.getId()})}" th:text="${product.getName()}"></a>
-                <p th:text="'Цена: ' + ${product.getPrice()}"></p>
+                <p th:text="'Цена: ' + ${product.getPrice()}+'Р'"></p>
                 <a class="key" th:href="@{/profile/cart/add/{id}(id=${product.getId()})}">Купить</a>
                 <p></p>
                 <hr class="hr-vertical-gradient">

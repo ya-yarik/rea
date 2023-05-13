@@ -5,6 +5,7 @@ import com.example.project.models.Orders;
 import com.example.project.models.Product;
 import com.example.project.models.UserModel;
 import com.example.project.repositories.CartRepository;
+import com.example.project.repositories.CategoryRepository;
 import com.example.project.repositories.GoodsRepository;
 import com.example.project.repositories.OrderRepository;
 import com.example.project.security.UsersDetails;
@@ -31,14 +32,16 @@ public class Users {
     private final GoodsRepository goodsRepository;
     private final CartRepository cartRepository;
     private final OrderRepository orderRepository;
+    private final CategoryRepository categoryRepository;
 
-    public Users(UsersValidator usersValidator, UsersServices usersServices, GoodsRepository goodsRepository, GoodsServices goodsServices, CartRepository cartRepository, OrderRepository orderRepository) {
+    public Users(UsersValidator usersValidator, UsersServices usersServices, GoodsRepository goodsRepository, GoodsServices goodsServices, CartRepository cartRepository, OrderRepository orderRepository, CategoryRepository categoryRepository) {
         this.usersValidator = usersValidator;
         this.usersServices = usersServices;
         this.goodsRepository = goodsRepository;
         this.goodsServices=goodsServices;
         this.cartRepository=cartRepository;
         this.orderRepository=orderRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     @GetMapping("/profile")
@@ -194,38 +197,43 @@ public class Users {
     }
 
     @PostMapping("/profile/mainsearch")
-    public String productSearch(@RequestParam("search") String search, @RequestParam("up") String up, @RequestParam("to") String to, @RequestParam(value = "price", required = false, defaultValue = "") String price, @RequestParam(value = "category", required = false) String category, Model model){
+    public String productSearch(@RequestParam("search") String search, @RequestParam("up") String up, @RequestParam("to") String to, @RequestParam(value = "price", required = false, defaultValue = "") String price, @RequestParam(value = "categoriest", required = false) String categoriest, Model model){
 
+        model.addAttribute("value_search", search);
+        model.addAttribute("value_price_up", up);
+        model.addAttribute("value_price_to", to);
         model.addAttribute("product", goodsServices.getAllProducts());
+        model.addAttribute("category", categoryRepository.findAll());
 
         if(!up.isEmpty() & !to.isEmpty()){
-            if(!price.isEmpty()){
-                if(price.equals("sorted_by_ascending_price")) {
-                    if (!category.isEmpty()) {
+            if(price.isEmpty() & categoriest.matches("\\d+")) {
+                model.addAttribute("categoriest", categoriest);
+                model.addAttribute("search_product", goodsRepository.findByNameAndCategoryOrderByPriceAsc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to), Integer.parseInt(categoriest)));
+            }
+            else if(!price.isEmpty()) {
+                if (price.equals("sorted_by_ascending_price")) {
+                    ///
 
-                        model.addAttribute("category", category);
-                        model.addAttribute("search_product", goodsRepository.findByNameAndCategoryOrderByPriceAsc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to), Integer.parseInt(category)));
-                    }
+                    if (categoriest.matches("\\d+")) {
+                        model.addAttribute("categoriest", categoriest);
+                        model.addAttribute("search_product", goodsRepository.findByNameAndCategoryOrderByPriceAsc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to), Integer.parseInt(categoriest)));
 
-                    else {
+                    } else {
+
                         model.addAttribute("search_product", goodsRepository.findByNameOrderByPriceAsc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to)));
                     }
+                } else if (price.equals("sorted_by_descending_price")) {
+                    if (categoriest.matches("\\d+")) {
+                        model.addAttribute("categoriest", categoriest);
+                        model.addAttribute("search_product", goodsRepository.findByNameAndCategoryOrderByPriceDesc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to), Integer.parseInt(categoriest)));
 
-                }
-
-                else if(price.equals("sorted_by_descending_price")){
-                    if(!category.isEmpty()){
-
-                        model.addAttribute("category", category);
-                        model.addAttribute("search_product", goodsRepository.findByNameAndCategoryOrderByPriceDesc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to), Integer.parseInt(category)));
-                    }
-
-                    else {
+                    } else {
 
                         model.addAttribute("search_product", goodsRepository.findByNameOrderByPriceDesc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to)));
                     }
                 }
             }
+
 
             else {
 
@@ -233,14 +241,42 @@ public class Users {
             }
         }
 
+        //
+        else if(up.isEmpty() & to.isEmpty() & !price.isEmpty() & categoriest.matches("\\d+")){
+
+            if (price.equals("sorted_by_ascending_price")) {
+                if (!categoriest.isEmpty()) {
+                    model.addAttribute("categoriest", categoriest);
+                    model.addAttribute("search_product", goodsRepository.findByNameAndCategoryAndPriceOrderByPriceAsc(search.toLowerCase(), Integer.parseInt(categoriest)));
+
+                } else {
+                    model.addAttribute("search_product", goodsRepository.findByNameOrderByPriceAsc(search.toLowerCase()));
+
+                }
+            } else if (price.equals("sorted_by_descending_price")) {
+                if (!categoriest.isEmpty()) {
+                    model.addAttribute("categoriest", categoriest);
+                    model.addAttribute("search_product", goodsRepository.findByNameAndCategoryAndPriceOrderByPriceDesc(search.toLowerCase(), Integer.parseInt(categoriest)));
+
+                } else {
+                    model.addAttribute("search_product", goodsRepository.findByNameOrderByPriceDesc(search.toLowerCase()));
+
+                }
+            }
+        }
+        //
+
+        ////
+        else if(up.isEmpty() & to.isEmpty() & price.isEmpty() & categoriest.matches("\\d+")){
+            model.addAttribute("categoriest", categoriest);
+            model.addAttribute("search_product", goodsRepository.findByNameAndCategoryAndPriceOrderByPriceAsc(search.toLowerCase(), Integer.parseInt(categoriest)));
+        }
+        ////
+
         else {
 
             model.addAttribute("search_product", goodsRepository.findByNameContainingIgnoreCase(search));
         }
-
-        model.addAttribute("value_search", search);
-        model.addAttribute("value_price_up", up);
-        model.addAttribute("value_price_to", to);
         return "mainsearch";
     }
 

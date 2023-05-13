@@ -14,6 +14,19 @@ public class Category {
     @OneToMany (mappedBy = "category", fetch = FetchType.EAGER)
     private List<Product> product;
 
+    public Category(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public Category(int id, String name, List<Product> product) {
+        this.id = id;
+        this.name = name;
+        this.product = product;
+    }
+
+    public Category() {
+    }
 
     public int getId() {
         return id;

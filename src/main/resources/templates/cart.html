@@ -12,19 +12,17 @@
   <a href="/profile/orders" class="orders">Мои заказы</a>
   <a href="/logout" class="keygoout">Выйти</a>
 </header>
-
 <div class="staticform" th:each="product : ${cart_product}">
   <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="300px">
   <br>
   <a th:href="@{/profile/product/{id}(id=${product.getId()})}" th:text="${product.getName()}"></a>
-  <p th:text="'Цена: ' + ${product.getPrice()}"></p>
+  <p th:text="'Цена: ' + ${product.getPrice()}+'Р'"></p>
   <hr class="hr-vertical-gradient">
-  <p style="font-size: 24px" th:text="'Итоговая цена: ' + ${price}"></p>
+  <p style="font-size: 24px" th:text="'Итоговая цена: ' + ${price}+'Р'"></p>
   <div class="keysblock">
     <a href="/profile/order/create" class="link">Оформить заказ</a>
     <a th:href="@{/profile/product/{id}(id=${product.getId()})}" class="link">Вернуться в описание</a>
-  <a th:href="@{/profile/cart/delete/{id}(id=${product.getId()})}" class="link">Удалить из корзины</a>
-  <a href="/profile" class="link">Отмена</a>
+  <a th:href="@{/profile/cart/delete/{id}(id=${product.getId()})}" class="link">Очистить корзину</a>
   </div>
   <hr class="hr-vertical-gradient">
 </div>

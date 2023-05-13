@@ -6,7 +6,8 @@
   <link rel="stylesheet" href="/static/styles/style.css">
   <script src="/static/js/furtherDropDown.js"></script>
   <script src="/static/js/flipFlop.js"></script>
-  <title>Список товаров</title>
+  <script src="/static/js/checkBoxOnFieldEnable.js"></script>
+  <title>Поиск товаров</title>
 </head>
 <body style="background-image: url(/static/img/backgroundl.jpg)">
 <header>
@@ -44,11 +45,11 @@
 
 </header>
 <p></p>
-<h1>Список товаров</h1>
+<h1>Поиск товаров</h1>
 <table>
   <tr><td id="searchBlock">
 
-    <form class="searchForm" th:method="POST" th:action="@{/main}">
+    <form class="staticFormFixed" th:method="POST" th:action="@{/main}">
       <fieldset>
         <legend>Поиск товара</legend>
         <input class="search" type="text" id="search" name="search" th:value="*{value_search}" placeholder="Название" required>
@@ -60,39 +61,25 @@
         <input type="number" name="to" id="to" th:value="*{value_price_to}">
         <br>
         <br>
-          <input type="radio" id="ascending_price" name="price" value="sorted_by_ascending_price" checked>
+          <input type="radio" id="ascending_price" name="price" value="sorted_by_ascending_price">
           <label for="ascending_price">Отсортировать по возрастанию цены</label>
           <p></p>
           <input type="radio" id="descending_price" name="price"
                  value="sorted_by_descending_price">
           <label for="descending_price">Отсортировать по убыванию цены</label>
           <p></p>
-          <p>Категория: </p>
+        <p>Поиск по категории: </p>
 
-        <ul><li><p><a href="javascript:flipFlop('flipFlop_2');">Выберите категорию</a></p>
-          <ul id="flipFlop_2" style="display: none"><li th:each="category : ${category}">
-            <option th:text="${category.toString()}" th:value="${category.toString()}"></option>
+
+        <ul><li><p><a href="javascript:flipFlop_3('flipFlop_3');">Выберите категорию</a></p>
+          <ul id="flipFlop_3" style="display: none"><li th:each="categories : ${category}">
+            <option th:text="${categories.toString()}" th:value="${categories.toString()}"></option>
           </li></ul></li></ul>
-
-<!--        <ul>-->
-<!--          <li th:each="category : ${category}">-->
-<!--            <input type="radio" th:field="*{category}" th:value="${category.toString()}" th:text="${category.toString()}"/>-->
-<!--          </li>-->
-<!--        </ul>-->
-
-<!--          <p></p>-->
-
-<!--          <select class="field" name="category" th:field="*{category}" id="category">-->
-<!--            <div th:each="category : ${category}">-->
-<!--              <option th:text="${category.toString()}" th:value="${category.toString()}">-->
-<!--            </div>-->
-<!--          </select>-->
-<!--          <p></p>-->
 
           <label>Введите в поле ниже<br>
             порядковый номер выбранной категории</label>
 
-        <input type="number" name="category" value="" min="1">
+        <input type="number" name="categoriest" value="" min="1" id="categoriest">
           <p></p>
 
           <div class="keysblock">
@@ -109,7 +96,7 @@
         <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="95%" height="71%">
         <br>
         <a th:href="@{/product/{id}(id=${product.getId()})}" th:text="${product.getName()}"></a>
-        <p th:text="'Цена: ' + ${product.getPrice()}"></p>
+        <p th:text="'Цена: ' + ${product.getPrice()}+'Р'"></p>
         <a class="key" th:href="@{/profile/cart/add/{id}(id=${product.getId()})}">Купить</a>
         <p></p>
         <hr class="hr-vertical-gradient">

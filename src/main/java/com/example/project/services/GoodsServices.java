@@ -52,8 +52,8 @@ public class GoodsServices {
         return goodsRepository.findByNameContainingIgnoreCase(sortSubmit);
     }
 
-    public List<Product> getByNameAndCategory (String search, Integer categories){
-        return goodsRepository.findByNameAndCategory(search, categories);
+    public List<Product> getByNameAndCategory (String search, Integer categoriest){
+        return goodsRepository.findByNameAndCategory(search, categoriest);
     }
 
     public List<Product> findByNameOrderByPriceAsc (String name){

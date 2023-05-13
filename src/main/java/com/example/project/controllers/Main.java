@@ -51,35 +51,43 @@ public class Main {
     }
 
     @PostMapping("/main")
-    public String productSearch3(@RequestParam("search") String search, @RequestParam("up") String up, @RequestParam("to") String to, @RequestParam(value = "price", required = false, defaultValue = "") String price, @RequestParam(value = "category", required = false) String category, Model model){
+    public String productSearch3(@RequestParam("search") String search, @RequestParam("up") String up, @RequestParam("to") String to, @RequestParam(value = "price", required = false, defaultValue = "") String price, @RequestParam(value = "categoriest", required = false) String categoriest, Model model){
 
+        model.addAttribute("value_search", search);
+        model.addAttribute("value_price_up", up);
+        model.addAttribute("value_price_to", to);
         model.addAttribute("product", goodsServices.getAllProducts());
+        model.addAttribute("category", categoryRepository.findAll());
 
         if(!up.isEmpty() & !to.isEmpty()){
-            if(!price.isEmpty()){
-                if(price.equals("sorted_by_ascending_price")) {
-                    if (!category.isEmpty()) {
-                            model.addAttribute("category", category);
-                            model.addAttribute("search_product", goodsRepository.findByNameAndCategoryOrderByPriceAsc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to), Integer.parseInt(category)));
-                    }
-                    else {
+            if(price.isEmpty() & categoriest.matches("\\d+")) {
+                    model.addAttribute("categoriest", categoriest);
+                    model.addAttribute("search_product", goodsRepository.findByNameAndCategoryOrderByPriceAsc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to), Integer.parseInt(categoriest)));
+            }
+            else if(!price.isEmpty()) {
+                if (price.equals("sorted_by_ascending_price")) {
+                    ///
 
-                        model.addAttribute("search_product", goodsRepository.findByNameOrderByPriceAsc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to)));
-                    }
-                }
+                        if (categoriest.matches("\\d+")) {
+                            model.addAttribute("categoriest", categoriest);
+                            model.addAttribute("search_product", goodsRepository.findByNameAndCategoryOrderByPriceAsc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to), Integer.parseInt(categoriest)));
 
-                else if(price.equals("sorted_by_descending_price")){
-                    if(!category.isEmpty()) {
-                            model.addAttribute("category", category);
-                            model.addAttribute("search_product", goodsRepository.findByNameAndCategoryOrderByPriceDesc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to), Integer.parseInt(category)));
-                    }
+                        } else {
 
-                    else {
+                            model.addAttribute("search_product", goodsRepository.findByNameOrderByPriceAsc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to)));
+                        }
+                    } else if (price.equals("sorted_by_descending_price")) {
+                        if (categoriest.matches("\\d+")) {
+                            model.addAttribute("categoriest", categoriest);
+                            model.addAttribute("search_product", goodsRepository.findByNameAndCategoryOrderByPriceDesc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to), Integer.parseInt(categoriest)));
+
+                        } else {
 
                         model.addAttribute("search_product", goodsRepository.findByNameOrderByPriceDesc(search.toLowerCase(), Float.parseFloat(up), Float.parseFloat(to)));
                     }
                 }
             }
+
 
             else {
 
@@ -87,17 +95,45 @@ public class Main {
             }
         }
 
+        //
+        else if(up.isEmpty() & to.isEmpty() & !price.isEmpty() & categoriest.matches("\\d+")){
+
+            if (price.equals("sorted_by_ascending_price")) {
+                if (!categoriest.isEmpty()) {
+                    model.addAttribute("categoriest", categoriest);
+                    model.addAttribute("search_product", goodsRepository.findByNameAndCategoryAndPriceOrderByPriceAsc(search.toLowerCase(), Integer.parseInt(categoriest)));
+
+                } else {
+                    model.addAttribute("search_product", goodsRepository.findByNameOrderByPriceAsc(search.toLowerCase()));
+
+                }
+            } else if (price.equals("sorted_by_descending_price")) {
+                if (!categoriest.isEmpty()) {
+                    model.addAttribute("categoriest", categoriest);
+                    model.addAttribute("search_product", goodsRepository.findByNameAndCategoryAndPriceOrderByPriceDesc(search.toLowerCase(), Integer.parseInt(categoriest)));
+
+                } else {
+                    model.addAttribute("search_product", goodsRepository.findByNameOrderByPriceDesc(search.toLowerCase()));
+
+                }
+            }
+        }
+        //
+
+        ////
+        else if(up.isEmpty() & to.isEmpty() & price.isEmpty() & categoriest.matches("\\d+")){
+            model.addAttribute("categoriest", categoriest);
+            model.addAttribute("search_product", goodsRepository.findByNameAndCategoryAndPriceOrderByPriceAsc(search.toLowerCase(), Integer.parseInt(categoriest)));
+        }
+        ////
+
         else {
 
             model.addAttribute("search_product", goodsRepository.findByNameContainingIgnoreCase(search));
         }
-
-        model.addAttribute("value_search", search);
-        model.addAttribute("value_price_up", up);
-        model.addAttribute("value_price_to", to);
-        return "mainresult";
+        return "main";
     }
-
+    /////////////////////////////Разрабатываемое
     @GetMapping("/experiment")
     public String productSearch4(Model model){
         model.addAttribute("category", categoryRepository.findAll());

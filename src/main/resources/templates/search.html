@@ -43,26 +43,26 @@
 
 </header>
 <p></p>
-<h1>Список товаров</h1>
+<h1>Поиск товаров</h1>
 <table>
     <tr><td id="mainpage">
 
 
 
-        <form>
+        <form class="staticform">
             <p></p>
             <div th:each="product : ${productS}">
                 <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="95%" height="71%">
                 <br>
                 <a th:href="@{/product/{id}(id=${product.getId()})}" th:text="${product.getName()}"></a>
-                <p th:text="'Цена: ' + ${product.getPrice()}"></p>
+                <p th:text="'Цена: ' + ${product.getPrice()+'Р'}"></p>
                 <hr class="hr-vertical-gradient">
             </div>
             <p></p>
         </form>
 
     </td><td id="searchBlock">
-        <form class="searchForm" th:method="POST" th:action="@{/index/search}">
+        <form class="staticFormFixed" th:method="POST" th:action="@{/index/search}">
             <label for="sort">Поиск</label>
             <p><input type="text" name="sort" id="sort" placeholder="Что ищете?"></p>
 

@@ -44,13 +44,13 @@
 
 
 
-    <form>
+    <form class="staticform">
       <p></p>
       <div th:each="product : ${productAll}">
         <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="95%" height="71%">
         <br>
-        <a th:href="@{/product/{id}(id=${product.getId()})}" th:text="${product.getName()}"></a>
-        <p th:text="'Цена: ' + ${product.getPrice()}"></p>
+        <a th:href="@{/profile/product/{id}(id=${product.getId()})}" th:text="${product.getName()}"></a>
+        <p th:text="'Цена: ' + ${product.getPrice()}+'Р'"></p>
         <hr class="hr-vertical-gradient">
       </div>
       <p></p>

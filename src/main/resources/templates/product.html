@@ -22,12 +22,13 @@
     <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="300px">
     <br>
     <a th:href="@{/admin/product/{id}(id=${product.getId()})}" th:text="${product.getName()}"></a>
-    <p th:text="'Цена: ' + ${product.getPrice()}"></p>
+    <p th:text="'Цена: ' + ${product.getPrice()}+'Р'"></p>
     <hr class="hr-vertical-gradient">
     <div class="keysblock">
         <a class="key" th:href="@{/admin/product/edit/{id}(id=${product.getId()})}">Редактирование товара</a>
         <a class="key" th:href="@{/admin/product/delete/{id}(id=${product.getId()})}">Удаление товара</a>
     </div>
+    <hr class="hr-vertical-gradient">
 
 </div>
     <p></p>

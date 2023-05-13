@@ -32,10 +32,18 @@ public interface GoodsRepository extends JpaRepository<Product, Integer> {
     // Поиск по наименованию и фильтрация по диапазону цены, сортировка по убыванию цены,  а также фильтрация по категории
     @Query(value = "select * from shop_products where category_id = ?4 and(lower(name) LIKE %?1%) or (lower(name) LIKE '?1%') OR (lower(name) LIKE '%?1') and (price >= ?2 and price <= ?3) order by price desc",nativeQuery = true)
 
-    List<Product> findByNameAndCategoryOrderByPriceDesc(String name, float up, float to, int category);
+    List<Product> findByNameAndCategoryOrderByPriceDesc(String name, float up, float to, Integer category);
     @Query(value = "select * from shop_products where category_id = ?1 and name= ?2",nativeQuery = true)
-    List<Product> findByNameAndCategory (String name, int category);
+    List<Product> findByNameAndCategory (String name, Integer category);
     List<Product> findByNameOrderByPriceAsc (String name);
     List<Product> findByNameOrderByPriceDesc (String name);
+
+    @Query(value = "select * from shop_products where category_id = ?2 and(lower(name) LIKE %?1%) or (lower(name) LIKE '?1%') OR (lower(name) LIKE '%?1') order by price asc",nativeQuery = true)
+    List<Product> findByNameAndCategoryAndPriceOrderByPriceAsc (String name, Integer categoriest);
+
+    // Поиск по наименованию и фильтрация по диапазону цены, сортировка по убыванию цены,  а также фильтрация по категории
+    @Query(value = "select * from shop_products where category_id = ?2 and(lower(name) LIKE %?1%) or (lower(name) LIKE '?1%') OR (lower(name) LIKE '%?1') order by price desc",nativeQuery = true)
+
+    List<Product> findByNameAndCategoryAndPriceOrderByPriceDesc(String name, Integer categoriest);
 
 }

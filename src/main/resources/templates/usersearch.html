@@ -5,10 +5,11 @@
     <link href="/static/logo/reu.png" rel="shortcut icon">
     <link rel="stylesheet" href="/static/styles/style.css">
     <script src="/static/js/furtherDropDown.js"></script>
-    <title>Мой профиль</title>
+    <title>Поиск товара</title>
 </head>
 <body style="background-image: url(/static/img/backgroundl.jpg)">
 <header>
+    <a href="/profile" class="orders">Мой профиль</a>
 
     <div class="dropdown">
         <button onclick="furtherDropDownG()" class="dropbtn">О нас</button>
@@ -38,11 +39,9 @@
 
 </header>
 <p></p>
-<h1>Список товаров</h1>
+<h1>Поиск товаров</h1>
 <table>
     <tr><td id="mainpage">
-
-
 
         <form>
             <p></p>
@@ -50,7 +49,7 @@
                 <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="95%" height="71%">
                 <br>
                 <a th:href="@{/product/{id}(id=${product.getId()})}" th:text="${product.getName()}"></a>
-                <p th:text="'Цена: ' + ${product.getPrice()}"></p>
+                <p th:text="'Цена: ' + ${product.getPrice()}+'Р'"></p>
                 <hr class="hr-vertical-gradient">
             </div>
             <p></p>
